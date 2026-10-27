@@ -1,0 +1,159 @@
+{
+  "renderer": "Torchview 0.2.7 -> Graphviz dot 14.1.2",
+  "method": "SVG node-polygon intersection; Nimbus Sans baseline-aware text-box collision, node-containment and local-canvas checks; required DOT semantics",
+  "figures": [
+    {
+      "dot": "/home/zhaosiying/codebase/wall-x-iree-clean/docs/iree_wallx/implementation_evidence/torchview_full_flow.dot",
+      "svg": "/home/zhaosiying/codebase/wall-x-iree-clean/docs/iree_wallx/implementation_evidence/torchview_full_flow.dot.svg",
+      "png": "/home/zhaosiying/codebase/wall-x-iree-clean/docs/iree_wallx/implementation_evidence/torchview_full_flow.dot.png",
+      "png_size": [
+        2568,
+        1483
+      ],
+      "svg_viewBox": "0.00 0.00 2568.00 1483.00",
+      "node_count": 15,
+      "edge_label_count": 1,
+      "node_overlaps": [],
+      "text_overlaps": [],
+      "edge_label_overlaps": [],
+      "edge_labels_in_nodes": [],
+      "text_outside_node": [],
+      "clipped": [],
+      "semantics": {
+        "full_flow": true,
+        "layers": 36,
+        "suffix_euler_steps": 9
+      },
+      "passed": true
+    },
+    {
+      "dot": "/home/zhaosiying/codebase/wall-x-iree-clean/docs/iree_wallx/implementation_evidence/torchview_mot_layer.dot",
+      "svg": "/home/zhaosiying/codebase/wall-x-iree-clean/docs/iree_wallx/implementation_evidence/torchview_mot_layer.dot.svg",
+      "png": "/home/zhaosiying/codebase/wall-x-iree-clean/docs/iree_wallx/implementation_evidence/torchview_mot_layer.dot.png",
+      "png_size": [
+        2280,
+        2541
+      ],
+      "svg_viewBox": "0.00 0.00 2280.00 2541.00",
+      "node_count": 25,
+      "edge_label_count": 0,
+      "node_overlaps": [],
+      "text_overlaps": [],
+      "edge_label_overlaps": [],
+      "edge_labels_in_nodes": [],
+      "text_outside_node": [],
+      "clipped": [],
+      "semantics": {
+        "independent_expert_weights": true,
+        "zero_corridor": true
+      },
+      "passed": true
+    },
+    {
+      "dot": "/home/zhaosiying/codebase/wall-x-iree-clean/docs/iree_wallx/implementation_evidence/torchview_action_dof.dot",
+      "svg": "/home/zhaosiying/codebase/wall-x-iree-clean/docs/iree_wallx/implementation_evidence/torchview_action_dof.dot.svg",
+      "png": "/home/zhaosiying/codebase/wall-x-iree-clean/docs/iree_wallx/implementation_evidence/torchview_action_dof.dot.png",
+      "png_size": [
+        2201,
+        2171
+      ],
+      "svg_viewBox": "0.00 0.00 2201.00 2171.00",
+      "node_count": 19,
+      "edge_label_count": 0,
+      "node_overlaps": [],
+      "text_overlaps": [],
+      "edge_label_overlaps": [],
+      "edge_labels_in_nodes": [],
+      "text_outside_node": [],
+      "clipped": [],
+      "semantics": {
+        "action_layout": "52->1024->2048",
+        "silu": true,
+        "dof_and_euler": true
+      },
+      "passed": true
+    },
+    {
+      "dot": "/home/zhaosiying/codebase/wall-x-iree-clean/docs/iree_wallx/implementation_evidence/torchview_backend_architecture.dot",
+      "svg": "/home/zhaosiying/codebase/wall-x-iree-clean/docs/iree_wallx/implementation_evidence/torchview_backend_architecture.dot.svg",
+      "png": "/home/zhaosiying/codebase/wall-x-iree-clean/docs/iree_wallx/implementation_evidence/torchview_backend_architecture.dot.png",
+      "png_size": [
+        1517,
+        1146
+      ],
+      "svg_viewBox": "0.00 0.00 1517.00 1146.00",
+      "node_count": 12,
+      "edge_label_count": 0,
+      "node_overlaps": [],
+      "text_overlaps": [],
+      "edge_label_overlaps": [],
+      "edge_labels_in_nodes": [],
+      "text_outside_node": [],
+      "clipped": [],
+      "semantics": {
+        "backend_candidates": 4,
+        "shared_contract": true
+      },
+      "passed": true
+    },
+    {
+      "dot": "/home/zhaosiying/codebase/wall-x-iree-clean/docs/iree_wallx/implementation_evidence/torchview_flow_timeline.dot",
+      "svg": "/home/zhaosiying/codebase/wall-x-iree-clean/docs/iree_wallx/implementation_evidence/torchview_flow_timeline.dot.svg",
+      "png": "/home/zhaosiying/codebase/wall-x-iree-clean/docs/iree_wallx/implementation_evidence/torchview_flow_timeline.dot.png",
+      "png_size": [
+        1352,
+        3181
+      ],
+      "svg_viewBox": "0.00 0.00 1352.00 3181.00",
+      "node_count": 23,
+      "edge_label_count": 0,
+      "node_overlaps": [],
+      "text_overlaps": [],
+      "edge_label_overlaps": [],
+      "edge_labels_in_nodes": [],
+      "text_outside_node": [],
+      "clipped": [],
+      "semantics": {
+        "velocity_evaluations": 10,
+        "euler_updates": 10,
+        "time_points": 11,
+        "time_grid_shape": [
+          11
+        ]
+      },
+      "passed": true
+    },
+    {
+      "dot": "/home/zhaosiying/codebase/wall-x-iree-clean/docs/iree_wallx/implementation_evidence/torchview_causal_masks.dot",
+      "svg": "/home/zhaosiying/codebase/wall-x-iree-clean/docs/iree_wallx/implementation_evidence/torchview_causal_masks.dot.svg",
+      "png": "/home/zhaosiying/codebase/wall-x-iree-clean/docs/iree_wallx/implementation_evidence/torchview_causal_masks.dot.png",
+      "png_size": [
+        1862,
+        1488
+      ],
+      "svg_viewBox": "0.00 0.00 1862.00 1488.00",
+      "node_count": 16,
+      "edge_label_count": 0,
+      "node_overlaps": [],
+      "text_overlaps": [],
+      "edge_label_overlaps": [],
+      "edge_labels_in_nodes": [],
+      "text_outside_node": [],
+      "clipped": [],
+      "semantics": {
+        "prefill_shape": [
+          638,
+          638
+        ],
+        "suffix_shape": [
+          32,
+          638
+        ],
+        "pad_query_diagonal_self_loop": true,
+        "additive_rule": "True->0; False->-inf"
+      },
+      "passed": true
+    }
+  ],
+  "all_passed": true
+}

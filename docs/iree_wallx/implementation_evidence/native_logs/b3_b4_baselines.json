@@ -1,0 +1,24 @@
+{
+  "utc": "2026-10-23T04:27:25.478310+00:00",
+  "git_head": "35c5ad76910267812df4cf7beaf170727a190b43",
+  "note": "shared static flow (bitwise-equal to official); timing = Model API boundary, tensors device-resident",
+  "eager_static": {
+    "first_s": 0.42,
+    "p50_ms": 345.1,
+    "mean_ms": 344.9
+  },
+  "B4_compile": {
+    "first_s": 8.88,
+    "p50_ms": 115.1,
+    "mean_ms": 115.6,
+    "maxabs_vs_eager": 0.007571
+  },
+  "B3_reduce_overhead": {
+    "first_s": 8.29,
+    "p50_ms": 87.5,
+    "mean_ms": 87.4,
+    "maxabs_vs_eager": 0.007571,
+    "relmax_vs_eager": 0.006569
+  },
+  "vram_gb": 12.37
+}

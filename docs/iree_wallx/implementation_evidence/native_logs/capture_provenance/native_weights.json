@@ -1,0 +1,24 @@
+{
+  "capture_status": "accepted_not_black",
+  "captured_at": "2026-10-27T12:31:44.6308680Z",
+  "script": "/home/zhaosiying/shot_scripts/wallx_native_weights.sh",
+  "image": "C:\\Users\\Admin1\\shot\\wallx_native_20261027\\native_weights.png",
+  "raw_log": "C:\\Users\\Admin1\\shot\\wallx_native_20261027\\native_weights.log",
+  "exit_status": 0,
+  "image_quality": {
+    "validator": "near_black_grid_v1",
+    "width": 3840,
+    "height": 2400,
+    "sample_stride": 11,
+    "sampled_pixels": 76650,
+    "near_black_rgb_max": 12,
+    "rejection_fraction_threshold": 0.98,
+    "near_black_fraction": 0.00032615786040443573,
+    "mean_luminance": 34.5101436164432,
+    "maximum_luminance": 254.99999999999997,
+    "accepted_not_black": true,
+    "limitation": "Pixel visibility gate only; human review must check terminal content, theme, popups and command identity."
+  },
+  "sha256_before_taskbar_crop": "1258e21a831aad4ff48431c828161edb0fccb778e5f6b80b0e6a67922e30f7ee",
+  "review_required": "Inspect real terminal content, theme, popups and command identity before publication."
+}

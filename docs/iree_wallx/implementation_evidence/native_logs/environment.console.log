@@ -1,0 +1,14 @@
++ set -e
++ set -x
++ cd /home/zhaosiying/codebase/wall-x-iree-clean
++ /usr/bin/free -g
+               total        used        free      shared  buff/cache   available
+Mem:              47           9          36           8           9          37
+Swap:             12           8           3
++ nvidia-smi --query-gpu=name,memory.total,memory.used,driver_version,compute_cap --format=csv
+name, memory.total [MiB], memory.used [MiB], driver_version, compute_cap
+NVIDIA GeForce RTX 5090 Laptop GPU, 24463 MiB, 0 MiB, 610.74, 12.0
++ /usr/bin/git rev-parse --abbrev-ref HEAD
+feat/iree-serving-backend
++ /usr/bin/git rev-parse HEAD
+ce2a1ae31d9ee1028b97ca40e3f66034cf8c0e5f

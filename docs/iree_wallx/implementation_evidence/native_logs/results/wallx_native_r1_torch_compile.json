@@ -1,0 +1,31 @@
+{
+  "backend": "torch-compile",
+  "resolved_backend": "torch-compile",
+  "warmup": 3,
+  "repetitions": 10,
+  "wall_ms": [
+    141.36489300290123,
+    137.9643499967642,
+    138.82830704096705,
+    135.1469440269284,
+    135.0755209568888,
+    135.8259420376271,
+    135.61801199102774,
+    138.7904120492749,
+    136.85746397823095,
+    136.45147799979895
+  ],
+  "mean_ms": 137.19233230804093,
+  "median_ms": 136.65447098901495,
+  "same_noise_outputs_bitwise_equal": true,
+  "predict_shape": [
+    1,
+    32,
+    26
+  ],
+  "peak_torch_allocated_gib": 7.991147518157959,
+  "peak_torch_reserved_gib": 8.232421875,
+  "torch_compile_mode": "reduce-overhead",
+  "array_out": "/tmp/wallx_native_r1_torch_compile.npz",
+  "physical_action_sha256": "61b6af7af469973643b8be4b685ede83204f73290801d46dc54f9cbf27900e80"
+}

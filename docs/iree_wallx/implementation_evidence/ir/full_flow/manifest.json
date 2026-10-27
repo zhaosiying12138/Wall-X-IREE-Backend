@@ -1,0 +1,55 @@
+{
+  "input": "artifacts/ir/full_flow.mlir",
+  "compile_command": ".venv-serve/bin/iree-compile artifacts/ir/full_flow.mlir --iree-hal-target-device=cuda --iree-cuda-target=sm_120 --dump-compilation-phases-to=/tmp/wallx_native_full_flow_phases --iree-hal-dump-executable-configurations-to=/tmp/wallx_native_full_flow_hal --mlir-timing --mlir-pass-statistics --mlir-print-ir-after-failure -o artifacts/bin/full_flow.vmfb",
+  "phase_dump": "/tmp/wallx_native_full_flow_phases",
+  "production": {
+    "mlir_bytes": 15608302,
+    "vmfb_bytes": 3057029,
+    "irpa_bytes": 8341872640,
+    "inputs": 10,
+    "outputs": 1,
+    "output_shape": [
+      1,
+      32,
+      26
+    ],
+    "session_calls": 1,
+    "mlir_sha256": "e6593fc2d1965af022c526033177ca3b95451dce0a006ac9c971676c524af037",
+    "vmfb_sha256": "64d0a98ddfd5da4e3523a20f8533b8870a170af8e32bdd123142822f75d97a9d",
+    "irpa_sha256": "0f8f9a0b938ddc67e92ff59801ad50ab7690055ebdccf2449802f014652fb371"
+  },
+  "trace": {
+    "mlir_bytes": 15610637,
+    "vmfb_bytes": 3066661,
+    "mlir_sha256": "620386e0bdb224bbcab9752ad0154fef4a6d6b45a48f293dc146b814be178bc6",
+    "vmfb_sha256": "7932fa7084aaba541937324c912e326d9306dac55ddc85719c561830762053f7"
+  },
+  "verdict": "experimental-only: final normalized/physical action gates pass; context and V-cache strict gates fail",
+  "note": "Complete native compiler console logs are retained under native_logs. This directory contains line-numbered IR excerpts from the same build.",
+  "files": {
+    "configuration.txt": {
+      "bytes": 4471,
+      "sha256": "56112fcc77ddde94ccab6a2a17079b91a7a00e89c94bcba7c4b5fa898ec84144"
+    },
+    "flow.txt": {
+      "bytes": 1866,
+      "sha256": "5a54a05b306e1ba2443a2e1c74721149a18af860049e11843e0821e3bacf371c"
+    },
+    "input_main.txt": {
+      "bytes": 2520,
+      "sha256": "071b031258e0f5069f6a7bab7a5760ae1361e898840363b7b697831791f13dde"
+    },
+    "stream.txt": {
+      "bytes": 2066,
+      "sha256": "800c27df0f65d9426e17301619246c9d1aa82b9a0b32e9f849767fcf2f447cf9"
+    },
+    "torch_main.txt": {
+      "bytes": 1359,
+      "sha256": "674ec930909ee654ef3635a6d6b17c2963490e18f7bf2afcadd95b053567d024"
+    },
+    "vm.txt": {
+      "bytes": 2438,
+      "sha256": "107178f94e3e7c4155f233bb50e3c2051ff0296fb02d87177f9609e051064ea7"
+    }
+  }
+}

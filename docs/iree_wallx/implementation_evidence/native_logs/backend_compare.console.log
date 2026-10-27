@@ -1,0 +1,323 @@
++ set -euo pipefail
++ set -x
++ cd /home/zhaosiying/codebase/wall-x-iree-clean
++ /usr/bin/free -g
+               total        used        free      shared  buff/cache   available
+Mem:              47           8          11           7          35          38
+Swap:             12           9           2
++ .venv-serve/bin/python -c 'from pathlib import Path; gb=int(Path("/proc/meminfo").read_text().split("MemAvailable:")[1].split()[0])//(1024*1024); assert gb >= 16, f"available memory {gb} GB < 16 GB"'
++ nvidia-smi --query-gpu=name,memory.used,compute_cap --format=csv
+name, memory.used [MiB], compute_cap
+NVIDIA GeForce RTX 5090 Laptop GPU, 0 MiB, 12.0
++ export PYTHONPATH=/home/zhaosiying/codebase/wall-x-iree-clean
++ PYTHONPATH=/home/zhaosiying/codebase/wall-x-iree-clean
++ export LD_LIBRARY_PATH=/home/zhaosiying/codebase/wall-x-iree-clean/build/cudalib:
++ LD_LIBRARY_PATH=/home/zhaosiying/codebase/wall-x-iree-clean/build/cudalib:
++ export WALLX_CKPT=/home/zhaosiying/codebase/wallx-jax/weights/wall-oss-0.5
++ WALLX_CKPT=/home/zhaosiying/codebase/wallx-jax/weights/wall-oss-0.5
++ export WALLX_IREE_CUDALIB=/home/zhaosiying/codebase/wall-x-iree-clean/build/cudalib
++ WALLX_IREE_CUDALIB=/home/zhaosiying/codebase/wall-x-iree-clean/build/cudalib
++ .venv-serve/bin/python tests/iree_wallx/spot_backend_latency.py --backend staged --warmup 3 --repetitions 10 --prefill-vmfb /home/zhaosiying/codebase/wall-x/artifacts/bin/joint_prefill.vmfb --prefill-irpa /home/zhaosiying/codebase/wall-x/artifacts/bin/joint_prefill.weights.irpa --step-vmfb /home/zhaosiying/codebase/wall-x/artifacts/bin/denoise_step.vmfb --step-irpa /home/zhaosiying/codebase/wall-x/artifacts/bin/denoise_step.weights.irpa --out /tmp/wallx_native_r1_staged.json --array-out /tmp/wallx_native_r1_staged.npz
+typed TrainConfig loading failed; falling back to raw data config: task.dof_config is required (cannot be empty)
+/home/zhaosiying/codebase/wall-x-iree-clean/.venv-serve/lib/python3.12/site-packages/transformers/modeling_rope_utils.py:936: FutureWarning: `rope_config_validation` is deprecated and has been removed. Its functionality has been moved to RotaryEmbeddingConfigMixin.validate_rope method. PreTrainedConfig inherits this class, so please call self.validate_rope() instead. Also, make sure to use the new rope_parameters syntax. You can call self.standardize_rope_params() in the meantime.
+  warnings.warn(
+Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section'}
+The new embeddings will be initialized from a multivariate normal distribution that has old embeddings' mean and covariance. As described in this article: https://nlp.stanford.edu/~johnhew/vocab-expansion.html. To disable this, use `mean_resizing=False`
+staged iter=0 wall_ms=885.360
+staged iter=1 wall_ms=391.590
+staged iter=2 wall_ms=394.197
+staged iter=3 wall_ms=389.458
+staged iter=4 wall_ms=399.116
+staged iter=5 wall_ms=394.836
+staged iter=6 wall_ms=398.865
+staged iter=7 wall_ms=411.032
+staged iter=8 wall_ms=395.523
+staged iter=9 wall_ms=397.041
+staged iter=10 wall_ms=409.188
+staged iter=11 wall_ms=387.120
+staged iter=12 wall_ms=399.696
+{
+  "backend": "staged",
+  "resolved_backend": "iree",
+  "warmup": 3,
+  "repetitions": 10,
+  "wall_ms": [
+    389.4579199841246,
+    399.11556598963216,
+    394.8364360257983,
+    398.86472397483885,
+    411.0318520106375,
+    395.5226640100591,
+    397.04091602470726,
+    409.187876037322,
+    387.12036702781916,
+    399.696437001694
+  ],
+  "mean_ms": 398.1874758086633,
+  "median_ms": 397.95281999977306,
+  "same_noise_outputs_bitwise_equal": true,
+  "predict_shape": [
+    1,
+    32,
+    26
+  ],
+  "peak_torch_allocated_gib": 7.932619571685791,
+  "peak_torch_reserved_gib": 8.048828125,
+  "array_out": "/tmp/wallx_native_r1_staged.npz",
+  "physical_action_sha256": "0a208d6ceff85b6c3cd252dff7ea660b5271cbed1e8cf59b805d790f521a920e"
+}
++ .venv-serve/bin/python tests/iree_wallx/spot_backend_latency.py --backend expanded --warmup 3 --repetitions 10 --expanded-vmfb /home/zhaosiying/codebase/wall-x-iree-clean/artifacts/bin/full_flow.vmfb --expanded-irpa /home/zhaosiying/codebase/wall-x-iree-clean/artifacts/bin/full_flow.weights.irpa --out /tmp/wallx_native_r1_expanded.json --array-out /tmp/wallx_native_r1_expanded.npz
+typed TrainConfig loading failed; falling back to raw data config: task.dof_config is required (cannot be empty)
+/home/zhaosiying/codebase/wall-x-iree-clean/.venv-serve/lib/python3.12/site-packages/transformers/modeling_rope_utils.py:936: FutureWarning: `rope_config_validation` is deprecated and has been removed. Its functionality has been moved to RotaryEmbeddingConfigMixin.validate_rope method. PreTrainedConfig inherits this class, so please call self.validate_rope() instead. Also, make sure to use the new rope_parameters syntax. You can call self.standardize_rope_params() in the meantime.
+  warnings.warn(
+Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section'}
+The new embeddings will be initialized from a multivariate normal distribution that has old embeddings' mean and covariance. As described in this article: https://nlp.stanford.edu/~johnhew/vocab-expansion.html. To disable this, use `mean_resizing=False`
+expanded iter=0 wall_ms=628.136
+expanded iter=1 wall_ms=395.300
+expanded iter=2 wall_ms=396.051
+expanded iter=3 wall_ms=400.600
+expanded iter=4 wall_ms=398.360
+expanded iter=5 wall_ms=395.981
+expanded iter=6 wall_ms=389.059
+expanded iter=7 wall_ms=398.629
+expanded iter=8 wall_ms=412.831
+expanded iter=9 wall_ms=388.540
+expanded iter=10 wall_ms=392.448
+expanded iter=11 wall_ms=391.670
+expanded iter=12 wall_ms=389.726
+{
+  "backend": "expanded",
+  "resolved_backend": "iree-expanded",
+  "warmup": 3,
+  "repetitions": 10,
+  "wall_ms": [
+    400.6002360256389,
+    398.3596049947664,
+    395.9812080138363,
+    389.05911601614207,
+    398.6293799825944,
+    412.83134097466245,
+    388.5396480327472,
+    392.4483740120195,
+    391.67003397597,
+    389.7264669649303
+  ],
+  "mean_ms": 395.78454089933075,
+  "median_ms": 394.2147910129279,
+  "same_noise_outputs_bitwise_equal": true,
+  "predict_shape": [
+    1,
+    32,
+    26
+  ],
+  "peak_torch_allocated_gib": 7.872530460357666,
+  "peak_torch_reserved_gib": 7.962890625,
+  "array_out": "/tmp/wallx_native_r1_expanded.npz",
+  "physical_action_sha256": "bb6a982bca3f21cf25b1be9e0250db08c20419441761647deedeba3e4b5941a5"
+}
++ .venv-serve/bin/python tests/iree_wallx/spot_backend_latency.py --backend expanded --warmup 3 --repetitions 10 --expanded-vmfb /home/zhaosiying/codebase/wall-x-iree-clean/artifacts/bin/full_flow.vmfb --expanded-irpa /home/zhaosiying/codebase/wall-x-iree-clean/artifacts/bin/full_flow.weights.irpa --out /tmp/wallx_native_r2_expanded.json --array-out /tmp/wallx_native_r2_expanded.npz
+typed TrainConfig loading failed; falling back to raw data config: task.dof_config is required (cannot be empty)
+/home/zhaosiying/codebase/wall-x-iree-clean/.venv-serve/lib/python3.12/site-packages/transformers/modeling_rope_utils.py:936: FutureWarning: `rope_config_validation` is deprecated and has been removed. Its functionality has been moved to RotaryEmbeddingConfigMixin.validate_rope method. PreTrainedConfig inherits this class, so please call self.validate_rope() instead. Also, make sure to use the new rope_parameters syntax. You can call self.standardize_rope_params() in the meantime.
+  warnings.warn(
+Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section'}
+The new embeddings will be initialized from a multivariate normal distribution that has old embeddings' mean and covariance. As described in this article: https://nlp.stanford.edu/~johnhew/vocab-expansion.html. To disable this, use `mean_resizing=False`
+expanded iter=0 wall_ms=687.065
+expanded iter=1 wall_ms=387.857
+expanded iter=2 wall_ms=389.609
+expanded iter=3 wall_ms=385.725
+expanded iter=4 wall_ms=388.185
+expanded iter=5 wall_ms=389.714
+expanded iter=6 wall_ms=387.220
+expanded iter=7 wall_ms=392.645
+expanded iter=8 wall_ms=389.461
+expanded iter=9 wall_ms=385.752
+expanded iter=10 wall_ms=391.211
+expanded iter=11 wall_ms=387.094
+expanded iter=12 wall_ms=388.818
+{
+  "backend": "expanded",
+  "resolved_backend": "iree-expanded",
+  "warmup": 3,
+  "repetitions": 10,
+  "wall_ms": [
+    385.72539400774986,
+    388.18454794818535,
+    389.7139619803056,
+    387.2200599871576,
+    392.64483097940683,
+    389.46113898418844,
+    385.75217803008854,
+    391.2114000413567,
+    387.09357799962163,
+    388.818136008922
+  ],
+  "mean_ms": 388.58252259669825,
+  "median_ms": 388.5013419785537,
+  "same_noise_outputs_bitwise_equal": true,
+  "predict_shape": [
+    1,
+    32,
+    26
+  ],
+  "peak_torch_allocated_gib": 7.872530460357666,
+  "peak_torch_reserved_gib": 7.962890625,
+  "array_out": "/tmp/wallx_native_r2_expanded.npz",
+  "physical_action_sha256": "bb6a982bca3f21cf25b1be9e0250db08c20419441761647deedeba3e4b5941a5"
+}
++ .venv-serve/bin/python tests/iree_wallx/spot_backend_latency.py --backend staged --warmup 3 --repetitions 10 --prefill-vmfb /home/zhaosiying/codebase/wall-x/artifacts/bin/joint_prefill.vmfb --prefill-irpa /home/zhaosiying/codebase/wall-x/artifacts/bin/joint_prefill.weights.irpa --step-vmfb /home/zhaosiying/codebase/wall-x/artifacts/bin/denoise_step.vmfb --step-irpa /home/zhaosiying/codebase/wall-x/artifacts/bin/denoise_step.weights.irpa --out /tmp/wallx_native_r2_staged.json --array-out /tmp/wallx_native_r2_staged.npz
+typed TrainConfig loading failed; falling back to raw data config: task.dof_config is required (cannot be empty)
+/home/zhaosiying/codebase/wall-x-iree-clean/.venv-serve/lib/python3.12/site-packages/transformers/modeling_rope_utils.py:936: FutureWarning: `rope_config_validation` is deprecated and has been removed. Its functionality has been moved to RotaryEmbeddingConfigMixin.validate_rope method. PreTrainedConfig inherits this class, so please call self.validate_rope() instead. Also, make sure to use the new rope_parameters syntax. You can call self.standardize_rope_params() in the meantime.
+  warnings.warn(
+Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section'}
+The new embeddings will be initialized from a multivariate normal distribution that has old embeddings' mean and covariance. As described in this article: https://nlp.stanford.edu/~johnhew/vocab-expansion.html. To disable this, use `mean_resizing=False`
+staged iter=0 wall_ms=1344.987
+staged iter=1 wall_ms=388.919
+staged iter=2 wall_ms=405.246
+staged iter=3 wall_ms=397.232
+staged iter=4 wall_ms=390.115
+staged iter=5 wall_ms=389.045
+staged iter=6 wall_ms=395.355
+staged iter=7 wall_ms=389.106
+staged iter=8 wall_ms=389.951
+staged iter=9 wall_ms=395.844
+staged iter=10 wall_ms=388.912
+staged iter=11 wall_ms=396.452
+staged iter=12 wall_ms=388.828
+{
+  "backend": "staged",
+  "resolved_backend": "iree",
+  "warmup": 3,
+  "repetitions": 10,
+  "wall_ms": [
+    397.23240199964494,
+    390.11495298473164,
+    389.04519396601245,
+    395.35464998334646,
+    389.1064689960331,
+    389.951438002754,
+    395.84375702543184,
+    388.91234598122537,
+    396.45169803407043,
+    388.82832502713427
+  ],
+  "mean_ms": 392.08412320003845,
+  "median_ms": 390.0331954937428,
+  "same_noise_outputs_bitwise_equal": true,
+  "predict_shape": [
+    1,
+    32,
+    26
+  ],
+  "peak_torch_allocated_gib": 7.932619571685791,
+  "peak_torch_reserved_gib": 8.048828125,
+  "array_out": "/tmp/wallx_native_r2_staged.npz",
+  "physical_action_sha256": "0a208d6ceff85b6c3cd252dff7ea660b5271cbed1e8cf59b805d790f521a920e"
+}
++ .venv-serve/bin/python tests/iree_wallx/spot_backend_latency.py --backend torch-compile --warmup 3 --repetitions 10 --torch-compile-mode reduce-overhead --out /tmp/wallx_native_r2_torch_compile.json --array-out /tmp/wallx_native_r2_torch_compile.npz
+typed TrainConfig loading failed; falling back to raw data config: task.dof_config is required (cannot be empty)
+/home/zhaosiying/codebase/wall-x-iree-clean/.venv-serve/lib/python3.12/site-packages/transformers/modeling_rope_utils.py:936: FutureWarning: `rope_config_validation` is deprecated and has been removed. Its functionality has been moved to RotaryEmbeddingConfigMixin.validate_rope method. PreTrainedConfig inherits this class, so please call self.validate_rope() instead. Also, make sure to use the new rope_parameters syntax. You can call self.standardize_rope_params() in the meantime.
+  warnings.warn(
+Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section'}
+The new embeddings will be initialized from a multivariate normal distribution that has old embeddings' mean and covariance. As described in this article: https://nlp.stanford.edu/~johnhew/vocab-expansion.html. To disable this, use `mean_resizing=False`
+torch-compile iter=0 wall_ms=10919.930
+torch-compile iter=1 wall_ms=164.191
+torch-compile iter=2 wall_ms=141.732
+torch-compile iter=3 wall_ms=137.688
+torch-compile iter=4 wall_ms=137.410
+torch-compile iter=5 wall_ms=136.892
+torch-compile iter=6 wall_ms=140.037
+torch-compile iter=7 wall_ms=138.695
+torch-compile iter=8 wall_ms=136.114
+torch-compile iter=9 wall_ms=134.897
+torch-compile iter=10 wall_ms=140.102
+torch-compile iter=11 wall_ms=137.170
+torch-compile iter=12 wall_ms=139.113
+{
+  "backend": "torch-compile",
+  "resolved_backend": "torch-compile",
+  "warmup": 3,
+  "repetitions": 10,
+  "wall_ms": [
+    137.6879180315882,
+    137.40958395646885,
+    136.89190399600193,
+    140.03711799159646,
+    138.69492203230038,
+    136.1138399806805,
+    134.89739003125578,
+    140.1023860089481,
+    137.17033696593717,
+    139.11335897864774
+  ],
+  "mean_ms": 137.8118757973425,
+  "median_ms": 137.54875099402852,
+  "same_noise_outputs_bitwise_equal": true,
+  "predict_shape": [
+    1,
+    32,
+    26
+  ],
+  "peak_torch_allocated_gib": 7.991147518157959,
+  "peak_torch_reserved_gib": 8.232421875,
+  "torch_compile_mode": "reduce-overhead",
+  "array_out": "/tmp/wallx_native_r2_torch_compile.npz",
+  "physical_action_sha256": "61b6af7af469973643b8be4b685ede83204f73290801d46dc54f9cbf27900e80"
+}
++ .venv-serve/bin/python tests/iree_wallx/spot_backend_latency.py --backend official --warmup 3 --repetitions 10 --out /tmp/wallx_native_r2_official.json --array-out /tmp/wallx_native_r2_official.npz
+typed TrainConfig loading failed; falling back to raw data config: task.dof_config is required (cannot be empty)
+/home/zhaosiying/codebase/wall-x-iree-clean/.venv-serve/lib/python3.12/site-packages/transformers/modeling_rope_utils.py:936: FutureWarning: `rope_config_validation` is deprecated and has been removed. Its functionality has been moved to RotaryEmbeddingConfigMixin.validate_rope method. PreTrainedConfig inherits this class, so please call self.validate_rope() instead. Also, make sure to use the new rope_parameters syntax. You can call self.standardize_rope_params() in the meantime.
+  warnings.warn(
+Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section'}
+The new embeddings will be initialized from a multivariate normal distribution that has old embeddings' mean and covariance. As described in this article: https://nlp.stanford.edu/~johnhew/vocab-expansion.html. To disable this, use `mean_resizing=False`
+official iter=0 wall_ms=1075.844
+official iter=1 wall_ms=589.642
+official iter=2 wall_ms=578.747
+official iter=3 wall_ms=565.420
+official iter=4 wall_ms=599.154
+official iter=5 wall_ms=583.704
+official iter=6 wall_ms=574.752
+official iter=7 wall_ms=577.346
+official iter=8 wall_ms=603.360
+official iter=9 wall_ms=572.596
+official iter=10 wall_ms=568.650
+official iter=11 wall_ms=580.017
+official iter=12 wall_ms=578.755
+{
+  "backend": "official",
+  "resolved_backend": "eager",
+  "warmup": 3,
+  "repetitions": 10,
+  "wall_ms": [
+    565.4199990094639,
+    599.1540109971538,
+    583.7038810132071,
+    574.7522999881767,
+    577.3458069888875,
+    603.3596689812839,
+    572.5958060356788,
+    568.6498829745688,
+    580.0173199968413,
+    578.7554480484687
+  ],
+  "mean_ms": 580.375412403373,
+  "median_ms": 578.0506275186781,
+  "same_noise_outputs_bitwise_equal": true,
+  "predict_shape": [
+    1,
+    32,
+    26
+  ],
+  "peak_torch_allocated_gib": 7.962210655212402,
+  "peak_torch_reserved_gib": 8.099609375,
+  "array_out": "/tmp/wallx_native_r2_official.npz",
+  "physical_action_sha256": "caf022f9641578bfb56e231a0d0c5d3dda141399b7eaeaaf6f8c88dee0d7f83f"
+}
++ sha256sum /tmp/wallx_native_r1_official.json /tmp/wallx_native_r1_torch_compile.json /tmp/wallx_native_r1_staged.json /tmp/wallx_native_r1_expanded.json /tmp/wallx_native_r2_expanded.json /tmp/wallx_native_r2_staged.json /tmp/wallx_native_r2_torch_compile.json /tmp/wallx_native_r2_official.json
+93cd97f73b46df73c2831d17e2abb9c7a06fb65f70e81d28f79b028ee9af4ef1  /tmp/wallx_native_r1_official.json
+37468a16e923169d4e91502ca9fe82a59a61be0465b5e4340ebd444f0a991d4d  /tmp/wallx_native_r1_torch_compile.json
+539064162616b054e3e868dff2f3041470a1c5756d3eb7e20fac475229e01c19  /tmp/wallx_native_r1_staged.json
+7a60492121f41d7b331a5c35a05be040630f617c93fad55eb205997e8dadb7bf  /tmp/wallx_native_r1_expanded.json
+dee76f97fd1ecdd9a8ebab999bd80f5ee41b34f3f2ecd64abddc7255ab13807c  /tmp/wallx_native_r2_expanded.json
+a8ceac4bd9c8f6060bd9b1fd116a8b3f814753bf2a31a477eff8e8f07097b6e6  /tmp/wallx_native_r2_staged.json
+306d91efa8d1dbb79dde1f39f924cb38a10baacab5a8835091048785add2020b  /tmp/wallx_native_r2_torch_compile.json
+d36b408c785ce244394a91af2693a71102dd8719912b31372162b391f5435b69  /tmp/wallx_native_r2_official.json

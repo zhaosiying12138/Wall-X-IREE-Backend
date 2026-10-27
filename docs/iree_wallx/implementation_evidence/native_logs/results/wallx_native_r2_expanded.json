@@ -1,0 +1,30 @@
+{
+  "backend": "expanded",
+  "resolved_backend": "iree-expanded",
+  "warmup": 3,
+  "repetitions": 10,
+  "wall_ms": [
+    385.72539400774986,
+    388.18454794818535,
+    389.7139619803056,
+    387.2200599871576,
+    392.64483097940683,
+    389.46113898418844,
+    385.75217803008854,
+    391.2114000413567,
+    387.09357799962163,
+    388.818136008922
+  ],
+  "mean_ms": 388.58252259669825,
+  "median_ms": 388.5013419785537,
+  "same_noise_outputs_bitwise_equal": true,
+  "predict_shape": [
+    1,
+    32,
+    26
+  ],
+  "peak_torch_allocated_gib": 7.872530460357666,
+  "peak_torch_reserved_gib": 7.962890625,
+  "array_out": "/tmp/wallx_native_r2_expanded.npz",
+  "physical_action_sha256": "bb6a982bca3f21cf25b1be9e0250db08c20419441761647deedeba3e4b5941a5"
+}

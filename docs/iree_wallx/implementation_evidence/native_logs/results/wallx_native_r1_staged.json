@@ -1,0 +1,30 @@
+{
+  "backend": "staged",
+  "resolved_backend": "iree",
+  "warmup": 3,
+  "repetitions": 10,
+  "wall_ms": [
+    389.4579199841246,
+    399.11556598963216,
+    394.8364360257983,
+    398.86472397483885,
+    411.0318520106375,
+    395.5226640100591,
+    397.04091602470726,
+    409.187876037322,
+    387.12036702781916,
+    399.696437001694
+  ],
+  "mean_ms": 398.1874758086633,
+  "median_ms": 397.95281999977306,
+  "same_noise_outputs_bitwise_equal": true,
+  "predict_shape": [
+    1,
+    32,
+    26
+  ],
+  "peak_torch_allocated_gib": 7.932619571685791,
+  "peak_torch_reserved_gib": 8.048828125,
+  "array_out": "/tmp/wallx_native_r1_staged.npz",
+  "physical_action_sha256": "0a208d6ceff85b6c3cd252dff7ea660b5271cbed1e8cf59b805d790f521a920e"
+}

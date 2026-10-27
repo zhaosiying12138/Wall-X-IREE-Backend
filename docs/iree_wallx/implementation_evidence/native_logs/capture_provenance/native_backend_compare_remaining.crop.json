@@ -1,0 +1,19 @@
+{
+  "operation": "taskbar_crop_only",
+  "source_sha256": "9025c9e54b612d08f9bab991a6fc639d0c5edd20ae27c2ed9e6987f1af31cf8a",
+  "output_sha256": "9e25f1ce7e9c17d0ecdbfd850be0ca2da7f51860c29c8e7c9a27b7a678d45624",
+  "source_dimensions": [
+    3840,
+    2400
+  ],
+  "output_dimensions": [
+    3840,
+    2280
+  ],
+  "crop_box": [
+    0,
+    0,
+    3840,
+    2280
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "backend": "official",
+  "resolved_backend": "eager",
+  "warmup": 3,
+  "repetitions": 10,
+  "wall_ms": [
+    565.4199990094639,
+    599.1540109971538,
+    583.7038810132071,
+    574.7522999881767,
+    577.3458069888875,
+    603.3596689812839,
+    572.5958060356788,
+    568.6498829745688,
+    580.0173199968413,
+    578.7554480484687
+  ],
+  "mean_ms": 580.375412403373,
+  "median_ms": 578.0506275186781,
+  "same_noise_outputs_bitwise_equal": true,
+  "predict_shape": [
+    1,
+    32,
+    26
+  ],
+  "peak_torch_allocated_gib": 7.962210655212402,
+  "peak_torch_reserved_gib": 8.099609375,
+  "array_out": "/tmp/wallx_native_r2_official.npz",
+  "physical_action_sha256": "caf022f9641578bfb56e231a0d0c5d3dda141399b7eaeaaf6f8c88dee0d7f83f"
+}

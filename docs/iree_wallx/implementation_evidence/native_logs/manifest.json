@@ -1,0 +1,231 @@
+{
+  "capture_method": "PowerShell capture_session.ps1 -> maximized purple Ubuntu WSL -> bash -x",
+  "terminal_crop": "Windows taskbar only; terminal content untouched",
+  "console_logs": [
+    {
+      "path": "backend_compare.console.log",
+      "bytes": 17433,
+      "sha256": "c2097bb8261cb33343b965fff5402a9e12d6f531d394b5edd1c3866775b50c96"
+    },
+    {
+      "path": "environment.console.log",
+      "bytes": 668,
+      "sha256": "ef5a2c0b9f63aa79a3bbefaf01079f0ede84675bac8233fa7801b003f4b254e4"
+    },
+    {
+      "path": "expanded_server_only.console.log",
+      "bytes": 56596,
+      "sha256": "b826ad5234339096a1b223d72514143d74f8fbde87e5bd2001561231bbaddf62"
+    },
+    {
+      "path": "expanded_serving.console.log",
+      "bytes": 75957,
+      "sha256": "fca30c6af5be70ec6e7e93127ce0912eabc6b096972cf68c2037b3a478b27462"
+    },
+    {
+      "path": "full_flow_export.console.log",
+      "bytes": 5322,
+      "sha256": "0b94e7e24b58245858c2e6223ce832a2b3121ea08251c59ce3c2985694e6e027"
+    },
+    {
+      "path": "full_flow_iree_compile.console.log",
+      "bytes": 1640762,
+      "sha256": "1b25fe453804e7a6a034d2c45c30373a6f111be66acdc3c80c3428ec57465987"
+    },
+    {
+      "path": "full_flow_trace_iree_compile.console.log",
+      "bytes": 1652586,
+      "sha256": "6439c7b9d56e27bb4eda66cd699f7ae711517404adb7a7be2bac42863117862b"
+    },
+    {
+      "path": "full_flow_verify.console.log",
+      "bytes": 21869,
+      "sha256": "0f74774e96405345d1c58bff46b08f22f533376727ac394b82f23966159ff5fa"
+    },
+    {
+      "path": "staged_verify.console.log",
+      "bytes": 9224,
+      "sha256": "12fe8a04a16dd965811422f28e317db2b4b85f6554dfd625a12703d8eeaa7d13"
+    },
+    {
+      "path": "weights.console.log",
+      "bytes": 4420,
+      "sha256": "72bc03d971c5f1dbad90f64aa3d7a2ccc7a0d84687da78c05fc71d43f51b62e9"
+    }
+  ],
+  "result_files": [
+    {
+      "path": "results/wallx_native_r1_expanded.json",
+      "bytes": 750,
+      "sha256": "7a60492121f41d7b331a5c35a05be040630f617c93fad55eb205997e8dadb7bf"
+    },
+    {
+      "path": "results/wallx_native_r1_expanded.npz",
+      "bytes": 3610,
+      "sha256": "60326686a3237b99cc988d065e6f2e98ae133ce83151e3c676b9914c72f47bb2"
+    },
+    {
+      "path": "results/wallx_native_r1_official.json",
+      "bytes": 739,
+      "sha256": "93cd97f73b46df73c2831d17e2abb9c7a06fb65f70e81d28f79b028ee9af4ef1"
+    },
+    {
+      "path": "results/wallx_native_r1_official.npz",
+      "bytes": 3610,
+      "sha256": "91dfe3d1a7cde03982fcec29bee657f4b1aeb0931d2a58d37d388c668ff36a15"
+    },
+    {
+      "path": "results/wallx_native_r1_staged.json",
+      "bytes": 739,
+      "sha256": "539064162616b054e3e868dff2f3041470a1c5756d3eb7e20fac475229e01c19"
+    },
+    {
+      "path": "results/wallx_native_r1_staged.npz",
+      "bytes": 3610,
+      "sha256": "2aa5881f7b29a139d5e0aaf24860957603e12bcc1d2e53217cda7624a86c9d96"
+    },
+    {
+      "path": "results/wallx_native_r1_torch_compile.json",
+      "bytes": 809,
+      "sha256": "37468a16e923169d4e91502ca9fe82a59a61be0465b5e4340ebd444f0a991d4d"
+    },
+    {
+      "path": "results/wallx_native_r1_torch_compile.npz",
+      "bytes": 3610,
+      "sha256": "cea3bdb63f5965205c1b99c4aac8008af939602e1f1fb51b4cd85f905ad52995"
+    },
+    {
+      "path": "results/wallx_native_r2_expanded.json",
+      "bytes": 755,
+      "sha256": "dee76f97fd1ecdd9a8ebab999bd80f5ee41b34f3f2ecd64abddc7255ab13807c"
+    },
+    {
+      "path": "results/wallx_native_r2_expanded.npz",
+      "bytes": 3610,
+      "sha256": "60326686a3237b99cc988d065e6f2e98ae133ce83151e3c676b9914c72f47bb2"
+    },
+    {
+      "path": "results/wallx_native_r2_official.json",
+      "bytes": 740,
+      "sha256": "d36b408c785ce244394a91af2693a71102dd8719912b31372162b391f5435b69"
+    },
+    {
+      "path": "results/wallx_native_r2_official.npz",
+      "bytes": 3610,
+      "sha256": "91dfe3d1a7cde03982fcec29bee657f4b1aeb0931d2a58d37d388c668ff36a15"
+    },
+    {
+      "path": "results/wallx_native_r2_staged.json",
+      "bytes": 744,
+      "sha256": "a8ceac4bd9c8f6060bd9b1fd116a8b3f814753bf2a31a477eff8e8f07097b6e6"
+    },
+    {
+      "path": "results/wallx_native_r2_staged.npz",
+      "bytes": 3610,
+      "sha256": "2aa5881f7b29a139d5e0aaf24860957603e12bcc1d2e53217cda7624a86c9d96"
+    },
+    {
+      "path": "results/wallx_native_r2_torch_compile.json",
+      "bytes": 810,
+      "sha256": "306d91efa8d1dbb79dde1f39f924cb38a10baacab5a8835091048785add2020b"
+    },
+    {
+      "path": "results/wallx_native_r2_torch_compile.npz",
+      "bytes": 3610,
+      "sha256": "cea3bdb63f5965205c1b99c4aac8008af939602e1f1fb51b4cd85f905ad52995"
+    },
+    {
+      "path": "native_backend_comparison.json",
+      "bytes": 4200,
+      "sha256": "220dd059bad05d019c7a94b2fbf303684e3dbe575c383a426204352f093e551f"
+    }
+  ],
+  "terminal_images": [
+    {
+      "path": "native_backend_compare.png",
+      "bytes": 246103,
+      "sha256": "9e25f1ce7e9c17d0ecdbfd850be0ca2da7f51860c29c8e7c9a27b7a678d45624",
+      "dimensions": [
+        3840,
+        2280
+      ]
+    },
+    {
+      "path": "native_environment.png",
+      "bytes": 182254,
+      "sha256": "06a0320aaab0819b19076ef5b00bfbd627ac8233d23811167dd71a0d36f4769d",
+      "dimensions": [
+        3840,
+        2280
+      ]
+    },
+    {
+      "path": "native_expanded_serving.png",
+      "bytes": 263454,
+      "sha256": "1704249a6edb9ed25fbb1883331511d12dc5a2d533ba39001ccc46755c7b15b6",
+      "dimensions": [
+        3840,
+        2280
+      ]
+    },
+    {
+      "path": "native_export.png",
+      "bytes": 419182,
+      "sha256": "a03eabffe39a8785ee1193cb390815b892036197acaec2397cc22d67bffd2e14",
+      "dimensions": [
+        3840,
+        2280
+      ]
+    },
+    {
+      "path": "native_full_verify.png",
+      "bytes": 249594,
+      "sha256": "515aafdf013ce7fa4da7ec1e301f98bc4a5bc5cdef6802d4ff3dbcbfb5bb7e61",
+      "dimensions": [
+        3840,
+        2280
+      ]
+    },
+    {
+      "path": "native_iree_compile.png",
+      "bytes": 301639,
+      "sha256": "27a9bceae2cd40d9fbaf11b2ba7c779529b87bd74511530cb0de03d7ae491a99",
+      "dimensions": [
+        3840,
+        2280
+      ]
+    },
+    {
+      "path": "native_iree_compile_trace.png",
+      "bytes": 302560,
+      "sha256": "d2361108c8fce62a4cbd3fdbb716f279256e9c48668b41a72dd224540037583a",
+      "dimensions": [
+        3840,
+        2280
+      ]
+    },
+    {
+      "path": "native_weights.png",
+      "bytes": 129304,
+      "sha256": "f99df247a712031aa4b9c5a7b6eff7931fb701604cc31673a5c04cc391c36780",
+      "dimensions": [
+        3840,
+        2280
+      ]
+    }
+  ],
+  "capture_provenance": "native_logs/capture_provenance/",
+  "archived_solver_references": [
+    {
+      "path": "b3_b4_baselines.json",
+      "bytes": 604,
+      "sha256": "ef0b87f4da65f7dfe93777e229e67a4b78ffe3e741d5e2f7ed749f3376a97f54"
+    },
+    {
+      "path": "p8_b3_summary.json",
+      "bytes": 714,
+      "sha256": "02118156641ceef813e94580babf3edff46c2e1258f915cea59f44689c4cd9ef"
+    }
+  ],
+  "note": "Console files are complete unfiltered outputs from the recorded executions. JSON and NPZ files permit independent recomputation of latency and numerical comparisons."
+}

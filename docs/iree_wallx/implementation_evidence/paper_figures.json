@@ -1,0 +1,65 @@
+[
+  {
+    "file": "paper_walloss05_fig2_mot.png",
+    "paper": "Wall-OSS-0.5 Technical Report",
+    "arxiv": "https://arxiv.org/pdf/2605.30877v2",
+    "figure": "Figure 2",
+    "pdf_page": 4,
+    "caption": "Gradient-bridged co-training and MoT routing in Wall-OSS-0.5",
+    "crop_xyxy_at_2x": [
+      160,
+      155,
+      1065,
+      630
+    ],
+    "dimensions": [
+      905,
+      475
+    ],
+    "png_bytes": 70769,
+    "png_sha256": "ebc306faef5e9bb15424188b8845fbc9dded22f36ef504c496a69fb0655c557d",
+    "source_pdf_sha256": "9b2a011f5da25b3cadc05aa9ef37b459e00febf52352392edee57b396b542ab1"
+  },
+  {
+    "file": "paper_walloss05_fig3_rvq.png",
+    "paper": "Wall-OSS-0.5 Technical Report",
+    "arxiv": "https://arxiv.org/pdf/2605.30877v2",
+    "figure": "Figure 3",
+    "pdf_page": 5,
+    "caption": "Overview of Vision-Aligned RVQ Action Tokenizer",
+    "crop_xyxy_at_2x": [
+      95,
+      130,
+      1170,
+      450
+    ],
+    "dimensions": [
+      1075,
+      320
+    ],
+    "png_bytes": 63585,
+    "png_sha256": "b4a475001c3db24a68b309663d8811974e36ed9c35ac7f4c77531a46908c3939",
+    "source_pdf_sha256": "9b2a011f5da25b3cadc05aa9ef37b459e00febf52352392edee57b396b542ab1"
+  },
+  {
+    "file": "paper_walloss_2025_fig3_architecture.png",
+    "paper": "WALL-OSS: Igniting VLMs toward the Embodied Space",
+    "arxiv": "https://arxiv.org/pdf/2509.11766",
+    "figure": "Figure 3",
+    "pdf_page": 4,
+    "caption": "Architecture of WALL-OSS",
+    "crop_xyxy_at_2x": [
+      155,
+      900,
+      1080,
+      1340
+    ],
+    "dimensions": [
+      925,
+      440
+    ],
+    "png_bytes": 80056,
+    "png_sha256": "fddc3a8062dd44bb4ec56ebaf5b76cc4f6fdb3a83b7e7e199053555df15a4b7b",
+    "source_pdf_sha256": "16310df8f960b0864a1025a763e0b8e8e0515f81c17836d9e31250930948846d"
+  }
+]

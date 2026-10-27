@@ -1,0 +1,802 @@
+{
+  "backend_architecture": {
+    "title": "具身 Flow 模型 serving 后端结构",
+    "subtitle": "同一请求接口下的 eager、torch.compile 与 IREE；节点表示执行阶段，边表示张量与状态传递",
+    "nodes": {
+      "obs": {
+        "label": "观测 / 指令 / 状态",
+        "kind": "input",
+        "pos": [
+          0.06,
+          0.64
+        ],
+        "cluster": "host"
+      },
+      "proc": {
+        "label": "Host Processor\nJPEG · tokenizer · metadata",
+        "kind": "process",
+        "pos": [
+          0.19,
+          0.64
+        ],
+        "cluster": "host"
+      },
+      "registry": {
+        "label": "Backend Registry\n显式选择与失败",
+        "kind": "decision",
+        "pos": [
+          0.34,
+          0.64
+        ],
+        "cluster": "joint"
+      },
+      "eager": {
+        "label": "Eager\n官方模型路径",
+        "kind": "process",
+        "pos": [
+          0.53,
+          0.82
+        ],
+        "cluster": "host"
+      },
+      "compile": {
+        "label": "torch.compile\n静态 prefill + suffix",
+        "kind": "process",
+        "pos": [
+          0.53,
+          0.64
+        ],
+        "cluster": "action"
+      },
+      "iree": {
+        "label": "staged IREE\n2 个 VMFB + Device KV",
+        "kind": "process",
+        "pos": [
+          0.53,
+          0.46
+        ],
+        "cluster": "joint"
+      },
+      "expanded": {
+        "label": "iree-expanded\n1 个 full_flow VMFB",
+        "kind": "process",
+        "pos": [
+          0.53,
+          0.28
+        ],
+        "cluster": "joint"
+      },
+      "final": {
+        "label": "官方 finalizer\nunnormalize + DOF",
+        "kind": "process",
+        "pos": [
+          0.73,
+          0.64
+        ],
+        "cluster": "host"
+      },
+      "ws": {
+        "label": "WebSocket\n动作 [1,32,26]",
+        "kind": "output",
+        "pos": [
+          0.91,
+          0.64
+        ],
+        "cluster": "output"
+      },
+      "contract": {
+        "label": "共同契约\nH / D · noise · mask · times · KV",
+        "kind": "note",
+        "pos": [
+          0.34,
+          0.24
+        ],
+        "cluster": "cache"
+      }
+    },
+    "edges": [
+      [
+        "obs",
+        "proc",
+        "原始输入"
+      ],
+      [
+        "proc",
+        "registry",
+        "十个部署输入"
+      ],
+      [
+        "registry",
+        "eager",
+        "默认"
+      ],
+      [
+        "registry",
+        "compile",
+        "Inductor"
+      ],
+      [
+        "registry",
+        "iree",
+        "staged"
+      ],
+      [
+        "registry",
+        "expanded",
+        "full_flow"
+      ],
+      [
+        "eager",
+        "final",
+        "z_10"
+      ],
+      [
+        "compile",
+        "final",
+        "z_10"
+      ],
+      [
+        "iree",
+        "final",
+        "z_10"
+      ],
+      [
+        "expanded",
+        "final",
+        "z_10"
+      ],
+      [
+        "final",
+        "ws",
+        "物理动作"
+      ],
+      [
+        "contract",
+        "registry",
+        "模型契约"
+      ]
+    ]
+  },
+  "model_structure": {
+    "title": "WALL-OSS-0.5：从观测到 full_flow 的完整计算图",
+    "subtitle": "ViT 与上下文 → 606/32 双段 joint prefill → 图内 K/V 与 9 次 Euler → 官方动作输出",
+    "nodes": {
+      "pixels": {
+        "label": "pixel_values\n[2048,1176]",
+        "kind": "input",
+        "pos": [
+          0.06,
+          0.76
+        ],
+        "cluster": "vl"
+      },
+      "patch": {
+        "label": "Patch Embed\n14×14",
+        "kind": "process",
+        "pos": [
+          0.16,
+          0.76
+        ],
+        "cluster": "vl"
+      },
+      "vit": {
+        "label": "ViT ×32\nwindow / full attention",
+        "kind": "process",
+        "pos": [
+          0.27,
+          0.76
+        ],
+        "cluster": "vl"
+      },
+      "merge": {
+        "label": "Spatial Merge\n2048→512 tokens",
+        "kind": "process",
+        "pos": [
+          0.38,
+          0.76
+        ],
+        "cluster": "vl"
+      },
+      "ids": {
+        "label": "input_ids\n[1,638]",
+        "kind": "input",
+        "pos": [
+          0.16,
+          0.46
+        ],
+        "cluster": "host"
+      },
+      "embed": {
+        "label": "embed_tokens\ntext / state",
+        "kind": "process",
+        "pos": [
+          0.27,
+          0.46
+        ],
+        "cluster": "host"
+      },
+      "t0": {
+        "label": "t=0 action embed\nnoise + DOF + time",
+        "kind": "process",
+        "pos": [
+          0.38,
+          0.46
+        ],
+        "cluster": "action"
+      },
+      "scatter": {
+        "label": "Ordered Scatter\ninputs_embeds [1,638,2048]",
+        "kind": "process",
+        "pos": [
+          0.48,
+          0.64
+        ],
+        "cluster": "joint"
+      },
+      "prefill": {
+        "label": "Joint Prefill ×36\n606 VL + 32 Action",
+        "kind": "decision",
+        "pos": [
+          0.6,
+          0.64
+        ],
+        "cluster": "joint"
+      },
+      "kv": {
+        "label": "K / V Cache\n[36,1,2,638,128]",
+        "kind": "cache",
+        "pos": [
+          0.6,
+          0.37
+        ],
+        "cluster": "cache"
+      },
+      "solver": {
+        "label": "Denoise Euler Loop ×9\nsuffix ×36 + Euler",
+        "kind": "decision",
+        "pos": [
+          0.7,
+          0.64
+        ],
+        "cluster": "action"
+      },
+      "z10": {
+        "label": "z_10 [1,32,26]\nnormalized action",
+        "kind": "output",
+        "pos": [
+          0.8,
+          0.64
+        ],
+        "cluster": "output"
+      },
+      "final": {
+        "label": "unnormalize\n+ virtual tail DOF",
+        "kind": "process",
+        "pos": [
+          0.91,
+          0.64
+        ],
+        "cluster": "host"
+      },
+      "meta": {
+        "label": "position / mask / times\nnoise / padding / DOF",
+        "kind": "input",
+        "pos": [
+          0.48,
+          0.24
+        ],
+        "cluster": "cache"
+      },
+      "v0": {
+        "label": "v_0 + x_0 = z_1",
+        "kind": "note",
+        "pos": [
+          0.66,
+          0.46
+        ],
+        "cluster": "action"
+      }
+    },
+    "edges": [
+      [
+        "pixels",
+        "patch",
+        "两路 448×448"
+      ],
+      [
+        "patch",
+        "vit",
+        "2048 patches"
+      ],
+      [
+        "vit",
+        "merge",
+        "merged features"
+      ],
+      [
+        "merge",
+        "scatter",
+        "512 视觉 token"
+      ],
+      [
+        "ids",
+        "embed",
+        "token IDs"
+      ],
+      [
+        "embed",
+        "scatter",
+        "94 text/state"
+      ],
+      [
+        "t0",
+        "scatter",
+        "32 action"
+      ],
+      [
+        "scatter",
+        "prefill",
+        "638×2048"
+      ],
+      [
+        "meta",
+        "prefill",
+        "mask3d / mRoPE"
+      ],
+      [
+        "prefill",
+        "kv",
+        "post-rope K · 原值 V"
+      ],
+      [
+        "prefill",
+        "v0",
+        "首次速度"
+      ],
+      [
+        "v0",
+        "solver",
+        "x_0=z_1"
+      ],
+      [
+        "kv",
+        "solver",
+        ""
+      ],
+      [
+        "meta",
+        "solver",
+        ""
+      ],
+      [
+        "solver",
+        "z10",
+        "10 次更新"
+      ],
+      [
+        "z10",
+        "final",
+        "归一化轨迹"
+      ]
+    ],
+    "timeline": [
+      [
+        "z_0\nnoise",
+        "t_0=0"
+      ],
+      [
+        "v_0\nprefill",
+        "t_1=0.0999"
+      ],
+      [
+        "z_1\nx0",
+        "Euler"
+      ],
+      [
+        "v_1\nsuffix 1",
+        "t_1"
+      ],
+      [
+        "z_2",
+        "Euler"
+      ],
+      [
+        "…",
+        "steps 2–8"
+      ],
+      [
+        "v_9\nsuffix 9",
+        "t_9"
+      ],
+      [
+        "z_10\n输出",
+        "t_10=0.999"
+      ]
+    ]
+  },
+  "mot_layer_structure": {
+    "title": "MoT 单层：两路独立参数与一次 joint self-attention",
+    "subtitle": "上到下：token 分流 → 独立 norm/QKV → 拼接注意力 → 独立 O/MLP/residual；边标注真实 shape",
+    "nodes": {
+      "vision": {
+        "label": "[0,512)\n视觉 token ×512",
+        "kind": "input",
+        "pos": [
+          0.2,
+          0.86
+        ],
+        "cluster": "vl"
+      },
+      "text": {
+        "label": "[512,606)\n文本/状态 ×94",
+        "kind": "input",
+        "pos": [
+          0.5,
+          0.86
+        ],
+        "cluster": "host"
+      },
+      "action": {
+        "label": "[606,638)\n带噪动作 ×32",
+        "kind": "input",
+        "pos": [
+          0.8,
+          0.86
+        ],
+        "cluster": "action"
+      },
+      "vnorm": {
+        "label": "VL norm\n[606,2048]",
+        "kind": "process",
+        "pos": [
+          0.25,
+          0.7
+        ],
+        "cluster": "vl"
+      },
+      "anorm": {
+        "label": "Action norm\n[32,1024]",
+        "kind": "process",
+        "pos": [
+          0.75,
+          0.7
+        ],
+        "cluster": "action"
+      },
+      "vqkv": {
+        "label": "VL fused QKV\nweight [2560,2048]",
+        "kind": "process",
+        "pos": [
+          0.25,
+          0.55
+        ],
+        "cluster": "vl"
+      },
+      "aqkv": {
+        "label": "Action fused QKV\nweight [2560,1024]",
+        "kind": "process",
+        "pos": [
+          0.75,
+          0.55
+        ],
+        "cluster": "action"
+      },
+      "joint": {
+        "label": "Joint Self-Attention\nQ [1,638,16,128]\nK/V [1,638,2,128]",
+        "kind": "decision",
+        "pos": [
+          0.5,
+          0.39
+        ],
+        "cluster": "joint"
+      },
+      "vo": {
+        "label": "VL O [2048,2048]\nMLP 2048↔11008",
+        "kind": "process",
+        "pos": [
+          0.25,
+          0.23
+        ],
+        "cluster": "vl"
+      },
+      "ao": {
+        "label": "Action O [1024,2048]\nMLP 1024↔2048",
+        "kind": "process",
+        "pos": [
+          0.75,
+          0.23
+        ],
+        "cluster": "action"
+      },
+      "zero": {
+        "label": "zero corridor\n1024 valid + 1024 zeros",
+        "kind": "note",
+        "pos": [
+          0.75,
+          0.1
+        ],
+        "cluster": "cache"
+      },
+      "resid": {
+        "label": "Residual\n[1,638,2048]",
+        "kind": "output",
+        "pos": [
+          0.5,
+          0.1
+        ],
+        "cluster": "output"
+      },
+      "cache": {
+        "label": "36 层 K/V cache\n[36,1,2,638,128] fp32",
+        "kind": "cache",
+        "pos": [
+          0.5,
+          0.0
+        ],
+        "cluster": "cache"
+      }
+    },
+    "edges": [
+      [
+        "vision",
+        "vnorm",
+        "VL"
+      ],
+      [
+        "text",
+        "vnorm",
+        "VL"
+      ],
+      [
+        "action",
+        "anorm",
+        "Action"
+      ],
+      [
+        "vnorm",
+        "vqkv",
+        "norm"
+      ],
+      [
+        "anorm",
+        "aqkv",
+        "norm"
+      ],
+      [
+        "vqkv",
+        "joint",
+        "Q/K/V [606,2560]"
+      ],
+      [
+        "aqkv",
+        "joint",
+        "Q/K/V [32,2560]"
+      ],
+      [
+        "joint",
+        "vo",
+        "VL 段"
+      ],
+      [
+        "joint",
+        "ao",
+        "Action 段"
+      ],
+      [
+        "vo",
+        "resid",
+        "VL residual"
+      ],
+      [
+        "ao",
+        "zero",
+        "1024 hidden"
+      ],
+      [
+        "zero",
+        "resid",
+        "2048 布局"
+      ],
+      [
+        "joint",
+        "cache",
+        "post-rope K · 原值 V"
+      ]
+    ]
+  },
+  "action_dof_structure": {
+    "title": "Action 分支：52→1024→2048 与 DOF 速度混合",
+    "subtitle": "action hidden 的 zero corridor 与动作维度的 DOF mask 分别作用，最后在 Euler 前汇合",
+    "nodes": {
+      "x": {
+        "label": "noisy_action\n[1,32,26]",
+        "kind": "input",
+        "pos": [
+          0.07,
+          0.7
+        ],
+        "cluster": "action"
+      },
+      "dof": {
+        "label": "dof_mask\n[1,32,26]",
+        "kind": "input",
+        "pos": [
+          0.07,
+          0.42
+        ],
+        "cluster": "cache"
+      },
+      "concat": {
+        "label": "concat\n[1,32,52]",
+        "kind": "process",
+        "pos": [
+          0.18,
+          0.62
+        ],
+        "cluster": "action"
+      },
+      "w1": {
+        "label": "w1 [1024,52]\n52→1024",
+        "kind": "process",
+        "pos": [
+          0.29,
+          0.62
+        ],
+        "cluster": "action"
+      },
+      "time": {
+        "label": "time_embed\n512 sin + 512 cos",
+        "kind": "input",
+        "pos": [
+          0.29,
+          0.34
+        ],
+        "cluster": "cache"
+      },
+      "mlp": {
+        "label": "Action MLP\nw2 / SiLU / w3",
+        "kind": "process",
+        "pos": [
+          0.4,
+          0.62
+        ],
+        "cluster": "action"
+      },
+      "zero": {
+        "label": "zero corridor\n[1,32,2048]",
+        "kind": "process",
+        "pos": [
+          0.51,
+          0.62
+        ],
+        "cluster": "cache"
+      },
+      "layers": {
+        "label": "Action Expert + Joint ×36\n1024 有效宽度",
+        "kind": "decision",
+        "pos": [
+          0.62,
+          0.62
+        ],
+        "cluster": "joint"
+      },
+      "proj": {
+        "label": "action_proj_back\n1024→26",
+        "kind": "process",
+        "pos": [
+          0.73,
+          0.62
+        ],
+        "cluster": "action"
+      },
+      "vtheta": {
+        "label": "v_theta\n[1,32,26]",
+        "kind": "note",
+        "pos": [
+          0.73,
+          0.36
+        ],
+        "cluster": "action"
+      },
+      "vpad": {
+        "label": "v_padding\npadding_action − z_0",
+        "kind": "input",
+        "pos": [
+          0.51,
+          0.22
+        ],
+        "cluster": "host"
+      },
+      "mix": {
+        "label": "DOF 混合\nv_pad(1−mask)+v_theta·mask",
+        "kind": "decision",
+        "pos": [
+          0.73,
+          0.1
+        ],
+        "cluster": "action",
+        "size": [
+          0.18,
+          0.11
+        ],
+        "font": 6.8
+      },
+      "euler": {
+        "label": "Euler\nz_(j+1)=z_j+dt·v",
+        "kind": "process",
+        "pos": [
+          0.89,
+          0.34
+        ],
+        "cluster": "joint"
+      }
+    },
+    "edges": [
+      [
+        "x",
+        "concat",
+        "26"
+      ],
+      [
+        "dof",
+        "concat",
+        "26"
+      ],
+      [
+        "concat",
+        "w1",
+        "52"
+      ],
+      [
+        "w1",
+        "mlp",
+        "1024"
+      ],
+      [
+        "time",
+        "mlp",
+        "timestep"
+      ],
+      [
+        "mlp",
+        "zero",
+        "1024"
+      ],
+      [
+        "zero",
+        "layers",
+        "2048 residual"
+      ],
+      [
+        "layers",
+        "proj",
+        "final norm"
+      ],
+      [
+        "proj",
+        "vtheta",
+        "网络速度"
+      ],
+      [
+        "vtheta",
+        "mix",
+        "有效 DOF"
+      ],
+      [
+        "vpad",
+        "mix",
+        "无效 DOF"
+      ],
+      [
+        "mix",
+        "euler",
+        "v_j"
+      ],
+      [
+        "x",
+        "vpad",
+        "initial_noise=z_0"
+      ]
+    ]
+  }
+}

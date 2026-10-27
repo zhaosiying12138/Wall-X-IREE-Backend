@@ -1,0 +1,19 @@
+# Source: /tmp/wallx_native_full_flow_phases/module.6.flow.mlir
+# Bytes: 3497769
+
+# Pattern: 0; hits=176
+35:   flow.executable private @_initializer_0_dispatch_0 {
+62:   flow.executable private @_initializer_1_dispatch_0 {
+89:   flow.executable private @_initializer_2_dispatch_0 {
+116:   flow.executable private @_initializer_3_dispatch_0 {
+141:   flow.executable private @main$async_dispatch_0 {
+
+# Pattern: 1; hits=10766
+5669:     %13 = flow.dispatch @main$async_dispatch_0::@main$async_dispatch_0_elementwise_2408448_f32xbf16(%12) : (tensor<2408448xf32>) -> tensor<2408448xbf16>
+5671:     %15 = flow.dispatch @main$async_dispatch_1::@main$async_dispatch_1_matmul_2048x1280x1176_bf16xbf16xf32(%14, %11) : (tensor<2048x1176xbf16>, tensor<1280x1176xbf16>) -> tensor<2048x1280xbf16>
+5673:     %17 = flow.dispatch @main$async_dispatch_2::@main$async_dispatch_2_elementwise_broadcast_512x5120_i64xbf16(%16, %__parameter_model_context_vision_window_index_tensor_512xi64) : (tensor<512x4x1280xbf16>, tensor<512xi64>) -> tensor<512x5120xbf16>
+5675:     %19 = flow.dispatch @main$async_dispatch_3::@main$async_dispatch_3_reduction_2048x1280_f32(%18, %__parameter_model_context_vision_blocks_0_norm1_weight_tensor_1280xbf16) : (tensor<2048x1280xbf16>, tensor<1280xbf16>) -> tensor<2048x1280xbf16>
+5676:     %20 = flow.dispatch @main$async_dispatch_4::@main$async_dispatch_4_matmul_2048x3840x1280_bf16xbf16xf32(%19, %__parameter_model_context_vision_blocks_0_attn_qkv_weight_tensor_3840x1280xbf16) : (tensor<2048x1280xbf16>, tensor<3840x1280xbf16>) -> tensor<2048x3840xbf16>
+
+# Pattern: 2; hits=1
+2699:         %5 = iree_linalg_ext.attention <indexing_maps = [#map21, #map22, #map23, #map24, #map25, #map26]> ins(%0, %1, %2, %cst, %3 : tensor<2x8x32x128xbf16>, tensor<2x638x128xbf16>, tensor<2x638x128xbf16>, f32, tensor<2x8x32x638xi1>) outs(%4 : tensor<2x8x32x128xbf16>) {

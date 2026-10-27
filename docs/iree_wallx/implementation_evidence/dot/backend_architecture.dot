@@ -1,0 +1,79 @@
+strict digraph torchview_backend_architecture {
+	graph [bgcolor=white dpi=144 fontname=Helvetica fontsize=20 label="WALL-OSS-0.5 | backend_architecture | Torchview shape-only surrogate" labelloc=t nodesep=0.32 ordering=in pad=0.25 rankdir=TB ranksep=0.65 splines=ortho]
+	node [align=left fontname=Helvetica fontsize=10 height=0.2 margin=0 ranksep=0.1 shape=plaintext style=filled]
+	edge [fontsize=10]
+	0 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                        <TR><TD>request</TD></TR>
+                    </TABLE>> fillcolor=lightyellow]
+	1 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                        <TR><TD>shared_contract</TD></TR>
+                    </TABLE>> fillcolor=lightyellow]
+	2 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                        <TR><TD>HostProcessor<BR/>JPEG_tokenizer_metadata</TD></TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	3 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                        <TR><TD>SharedContract<BR/>H_D_noise_masks_times_KV</TD></TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	4 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                        <TR><TD>BackendRegistry<BR/>explicit_backend_selection</TD></TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	5 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                        <TR><TD>Eager<BR/>official_model</TD></TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	6 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                        <TR><TD>TorchCompile<BR/>static_prefill_and_suffix</TD></TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	7 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                        <TR><TD>staged_IREE<BR/>2_VMFB_Device_KV</TD></TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	8 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                        <TR><TD>expanded_IREE<BR/>1_full_flow_VMFB</TD></TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	9 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                        <TR><TD>OfficialFinalizer<BR/>unnormalize_and_virtual_tail_DOF</TD></TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	10 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                        <TR><TD>WebSocket<BR/>physical_action_[1,32,26]</TD></TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	11 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                        <TR><TD>output-tensor</TD></TR>
+                    </TABLE>> fillcolor=lightyellow]
+	0 -> 2
+	1 -> 3
+	2 -> 4
+	3 -> 4
+	4 -> 5
+	4 -> 6
+	4 -> 7
+	4 -> 8
+	5 -> 9
+	6 -> 9
+	7 -> 9
+	8 -> 9
+	9 -> 10
+	10 -> 11
+}

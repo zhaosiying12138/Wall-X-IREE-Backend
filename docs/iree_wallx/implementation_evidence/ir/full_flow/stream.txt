@@ -1,0 +1,17 @@
+# Source: /tmp/wallx_native_full_flow_phases/module.7.stream.mlir
+# Bytes: 6196407
+
+# Pattern: 0; hits=1
+8810:   util.func public @main$async(%arg0: !hal.buffer_view, %arg1: !hal.buffer_view, %arg2: !hal.buffer_view, %arg3: !hal.buffer_view, %arg4: !hal.buffer_view, %arg5: !hal.buffer_view, %arg6: !hal.buffer_view, %arg7: !hal.buffer_view, %arg8: !hal.buffer_view, %arg9: !hal.buffer_view, %arg10: !hal.fence, %arg11: !hal.fence) -> !hal.buffer_view attributes {inlinin
+
+# Pattern: 1; hits=2
+2617:     %10 = stream.cmd.execute once on(#hal.device.affinity<@__device_0>) await(%9) => with(%results_846#0 as %arg0: !stream.resource<constant>{%c212992}, %results_846#1 as %arg1: !stream.resource<constant>{%c8388608}, %results_846#2 as %arg2: !stream.resource<constant>{%c4194304}, %8 as %arg3: !stream.resource<constant>{%c256}, %result_848 as %arg4: !stream.r
+10356:     %12 = stream.cmd.execute on(#hal.device.affinity<@__device_0>) await(%11) => with(%2 as %arg12: !stream.resource<external>{%c9633792}, %__parameter_model_context_vision_patch_embed_proj_weight_tensor_1280x3x2x14x14xbf16 as %arg13: !stream.resource<constant>{%c3010560}, %__parameter_model_context_vision_window_index_tensor_512xi64 as %arg14: !stream.resou
+
+# Pattern: 2; hits=10766
+10357:       stream.cmd.dispatch @main$async_dispatch_0::@main$async_dispatch_0_elementwise_2408448_f32xbf16 {
+10361:       stream.cmd.dispatch @main$async_dispatch_1::@main$async_dispatch_1_matmul_2048x1280x1176_bf16xbf16xf32 {
+10366:       stream.cmd.dispatch @main$async_dispatch_2::@main$async_dispatch_2_elementwise_broadcast_512x5120_i64xbf16 {
+10371:       stream.cmd.dispatch @main$async_dispatch_3::@main$async_dispatch_3_reduction_2048x1280_f32(%c10059776_i32, %c0_i32 : i32, i32) {
+10376:       stream.cmd.dispatch @main$async_dispatch_4::@main$async_dispatch_4_matmul_2048x3840x1280_bf16xbf16xf32(%c0_i32, %c15302656_i32 : i32, i32) {
+10381:       stream.cmd.dispatch @main$async_dispatch_5::@main$async_dispatch_5_elementwise_transpose_2048x3x1280_bf16(%c15302656_i32, %c31031296_i32 : i32, i32) {

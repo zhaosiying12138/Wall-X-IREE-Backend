@@ -1,0 +1,730 @@
++ set -euo pipefail
++ set -x
++ cd /home/zhaosiying/codebase/wall-x-iree-clean
++ /usr/bin/free -g
+               total        used        free      shared  buff/cache   available
+Mem:              47           6          17           5          28          40
+Swap:             12          10           1
++ .venv-serve/bin/python -c 'from pathlib import Path; gb=int(Path("/proc/meminfo").read_text().split("MemAvailable:")[1].split()[0])//(1024*1024); assert gb >= 16, f"available memory {gb} GB < 16 GB"'
++ nvidia-smi --query-gpu=name,memory.used,compute_cap --format=csv
+name, memory.used [MiB], compute_cap
+NVIDIA GeForce RTX 5090 Laptop GPU, 0 MiB, 12.0
++ export PYTHONPATH=/home/zhaosiying/codebase/wall-x-iree-clean
++ PYTHONPATH=/home/zhaosiying/codebase/wall-x-iree-clean
++ export LD_LIBRARY_PATH=/home/zhaosiying/codebase/wall-x-iree-clean/build/cudalib:
++ LD_LIBRARY_PATH=/home/zhaosiying/codebase/wall-x-iree-clean/build/cudalib:
++ export WALLX_CKPT=/home/zhaosiying/codebase/wallx-jax/weights/wall-oss-0.5
++ WALLX_CKPT=/home/zhaosiying/codebase/wallx-jax/weights/wall-oss-0.5
++ export WALLX_IREE_FULL_FLOW_IRPA=/home/zhaosiying/codebase/wall-x-iree-clean/artifacts/bin/full_flow.weights.irpa
++ WALLX_IREE_FULL_FLOW_IRPA=/home/zhaosiying/codebase/wall-x-iree-clean/artifacts/bin/full_flow.weights.irpa
++ .venv-serve/bin/python tests/iree_wallx/test_noise_injection.py
+typed TrainConfig loading failed; falling back to raw data config: task.dof_config is required (cannot be empty)
+/home/zhaosiying/codebase/wall-x-iree-clean/.venv-serve/lib/python3.12/site-packages/transformers/modeling_rope_utils.py:936: FutureWarning: `rope_config_validation` is deprecated and has been removed. Its functionality has been moved to RotaryEmbeddingConfigMixin.validate_rope method. PreTrainedConfig inherits this class, so please call self.validate_rope() instead. Also, make sure to use the new rope_parameters syntax. You can call self.standardize_rope_params() in the meantime.
+  warnings.warn(
+Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section'}
+The new embeddings will be initialized from a multivariate normal distribution that has old embeddings' mean and covariance. As described in this article: https://nlp.stanford.edu/~johnhew/vocab-expansion.html. To disable this, use `mean_resizing=False`
+same-noise bitwise repro: True
+none-noise randomizes:    True
+noise changes output:     True
+PASS
++ .venv-serve/bin/python tests/iree_wallx/verify_full_flow.py --mode production --official-attn eager --vmfb /home/zhaosiying/codebase/wall-x-iree-clean/artifacts/bin/full_flow.vmfb --irpa /home/zhaosiying/codebase/wall-x-iree-clean/artifacts/bin/full_flow.weights.irpa --save /tmp/wallx_native_full_flow_production.npz
+typed TrainConfig loading failed; falling back to raw data config: task.dof_config is required (cannot be empty)
+/home/zhaosiying/codebase/wall-x-iree-clean/.venv-serve/lib/python3.12/site-packages/transformers/modeling_rope_utils.py:936: FutureWarning: `rope_config_validation` is deprecated and has been removed. Its functionality has been moved to RotaryEmbeddingConfigMixin.validate_rope method. PreTrainedConfig inherits this class, so please call self.validate_rope() instead. Also, make sure to use the new rope_parameters syntax. You can call self.standardize_rope_params() in the meantime.
+  warnings.warn(
+Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section'}
+The new embeddings will be initialized from a multivariate normal distribution that has old embeddings' mean and covariance. As described in this article: https://nlp.stanford.edu/~johnhew/vocab-expansion.html. To disable this, use `mean_resizing=False`
+{
+  "mode": "production",
+  "predict_shape": [
+    1,
+    32,
+    26
+  ],
+  "session_calls": 1,
+  "vmfb": "/home/zhaosiying/codebase/wall-x-iree-clean/artifacts/bin/full_flow.vmfb",
+  "pytorch_vision_calls": 0,
+  "pytorch_action_step_calls": 0
+}
+RESULT: PASS
++ .venv-serve/bin/python tests/iree_wallx/verify_full_flow.py --mode trace --official-attn eager --fresh-official-flow --allow-experimental --vmfb /home/zhaosiying/codebase/wall-x-iree-clean/artifacts/bin/full_flow_trace.vmfb --irpa /home/zhaosiying/codebase/wall-x-iree-clean/artifacts/bin/full_flow.weights.irpa --save /tmp/wallx_native_full_flow_trace.npz
+typed TrainConfig loading failed; falling back to raw data config: task.dof_config is required (cannot be empty)
+/home/zhaosiying/codebase/wall-x-iree-clean/.venv-serve/lib/python3.12/site-packages/transformers/modeling_rope_utils.py:936: FutureWarning: `rope_config_validation` is deprecated and has been removed. Its functionality has been moved to RotaryEmbeddingConfigMixin.validate_rope method. PreTrainedConfig inherits this class, so please call self.validate_rope() instead. Also, make sure to use the new rope_parameters syntax. You can call self.standardize_rope_params() in the meantime.
+  warnings.warn(
+Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section'}
+The new embeddings will be initialized from a multivariate normal distribution that has old embeddings' mean and covariance. As described in this article: https://nlp.stanford.edu/~johnhew/vocab-expansion.html. To disable this, use `mean_resizing=False`
+full_flow trace invocation complete
+{
+  "mode": "trace",
+  "session_calls": 1,
+  "official_vision_attention": "eager",
+  "official_vision_class": "Qwen2_5_VLVisionAttention",
+  "official_reference": "fresh_flow",
+  "shapes": {
+    "final": [
+      1,
+      32,
+      26
+    ],
+    "embeds": [
+      1,
+      638,
+      2048
+    ],
+    "k": [
+      36,
+      1,
+      2,
+      638,
+      128
+    ],
+    "v": [
+      36,
+      1,
+      2,
+      638,
+      128
+    ],
+    "v0": [
+      1,
+      32,
+      26
+    ],
+    "x0": [
+      1,
+      32,
+      26
+    ],
+    "velocities": [
+      9,
+      1,
+      32,
+      26
+    ],
+    "trajectory": [
+      10,
+      1,
+      32,
+      26
+    ]
+  },
+  "context_vs_fresh_official": {
+    "maxabs": 3.875,
+    "meanabs": 0.052976422011852264,
+    "relmax": 0.06126482213438735
+  },
+  "context_vs_python_static": {
+    "maxabs": 3.875,
+    "meanabs": 0.052976422011852264,
+    "relmax": 0.06126482213438735
+  },
+  "python_static_vs_official": {
+    "maxabs": 0.0,
+    "meanabs": 0.0,
+    "relmax": 0.0
+  },
+  "context_categories": {
+    "image": {
+      "maxabs": 3.875,
+      "meanabs": 0.06601344048976898,
+      "relmax": 0.06126482213438735
+    },
+    "action": {
+      "maxabs": 0.0625,
+      "meanabs": 2.818189386744052e-06,
+      "relmax": 0.001838235294117647
+    },
+    "text_and_state": {
+      "maxabs": 0.0,
+      "meanabs": 0.0,
+      "relmax": 0.0
+    },
+    "worst_tokens": [
+      {
+        "token": 172,
+        "maxabs": 3.875,
+        "image": true,
+        "action": false
+      },
+      {
+        "token": 188,
+        "maxabs": 2.75,
+        "image": true,
+        "action": false
+      },
+      {
+        "token": 491,
+        "maxabs": 2.57421875,
+        "image": true,
+        "action": false
+      },
+      {
+        "token": 132,
+        "maxabs": 2.5625,
+        "image": true,
+        "action": false
+      },
+      {
+        "token": 511,
+        "maxabs": 2.5,
+        "image": true,
+        "action": false
+      },
+      {
+        "token": 338,
+        "maxabs": 2.5,
+        "image": true,
+        "action": false
+      },
+      {
+        "token": 271,
+        "maxabs": 2.375,
+        "image": true,
+        "action": false
+      },
+      {
+        "token": 120,
+        "maxabs": 2.25,
+        "image": true,
+        "action": false
+      }
+    ]
+  },
+  "context_vs_bank": {
+    "maxabs": 4.625,
+    "meanabs": 0.05011771246790886,
+    "relmax": 0.07254901960784314
+  },
+  "position_equal": true,
+  "times_equal": true,
+  "noise_equal": true,
+  "v0_vs_static": {
+    "maxabs": 0.00722193717956543,
+    "meanabs": 0.0015120134921744466,
+    "relmax": 0.0018896118819164435
+  },
+  "x0_vs_static": {
+    "maxabs": 0.0007214546203613281,
+    "meanabs": 0.000151051179273054,
+    "relmax": 0.00023586887436607317
+  },
+  "final_vs_static": {
+    "maxabs": 0.008207634091377258,
+    "meanabs": 0.0008537484100088477,
+    "relmax": 0.00808799482279053
+  },
+  "final_vs_official_bank": {
+    "maxabs": 0.010391965508460999,
+    "meanabs": 0.0009763594716787338,
+    "relmax": 0.010253669568461736
+  },
+  "velocities_vs_static": [
+    {
+      "maxabs": 0.009873509407043457,
+      "meanabs": 0.0016360512236133218,
+      "relmax": 0.002583392824927032
+    },
+    {
+      "maxabs": 0.0070604681968688965,
+      "meanabs": 0.001574137364514172,
+      "relmax": 0.0018473637010367134
+    },
+    {
+      "maxabs": 0.010357767343521118,
+      "meanabs": 0.0016852141125127673,
+      "relmax": 0.002710098378842635
+    },
+    {
+      "maxabs": 0.010817140340805054,
+      "meanabs": 0.0016950250137597322,
+      "relmax": 0.002830292815919077
+    },
+    {
+      "maxabs": 0.01018667221069336,
+      "meanabs": 0.001862881239503622,
+      "relmax": 0.0026653315264191335
+    },
+    {
+      "maxabs": 0.01584792137145996,
+      "meanabs": 0.0018879292765632272,
+      "relmax": 0.004146591112966489
+    },
+    {
+      "maxabs": 0.01349717378616333,
+      "meanabs": 0.0022997898049652576,
+      "relmax": 0.0035315206051349333
+    },
+    {
+      "maxabs": 0.015800118446350098,
+      "meanabs": 0.0027041519060730934,
+      "relmax": 0.004134083530439526
+    },
+    {
+      "maxabs": 0.030126214027404785,
+      "meanabs": 0.00491465674713254,
+      "relmax": 0.007882490607148624
+    }
+  ],
+  "trajectory_vs_static": [
+    {
+      "maxabs": 0.0007214546203613281,
+      "meanabs": 0.000151051179273054,
+      "relmax": 0.00023586887436607317
+    },
+    {
+      "maxabs": 0.0015628337860107422,
+      "meanabs": 0.0002529843186493963,
+      "relmax": 0.0005742702737556469
+    },
+    {
+      "maxabs": 0.0018854141235351562,
+      "meanabs": 0.00033953372621908784,
+      "relmax": 0.0007572369851090132
+    },
+    {
+      "maxabs": 0.0024108588695526123,
+      "meanabs": 0.00041627560858614743,
+      "relmax": 0.0010596165318569495
+    },
+    {
+      "maxabs": 0.0034914910793304443,
+      "meanabs": 0.0005013535264879465,
+      "relmax": 0.0016946446365419395
+    },
+    {
+      "maxabs": 0.003910481929779053,
+      "meanabs": 0.0005784677923657,
+      "relmax": 0.0021190018137495366
+    },
+    {
+      "maxabs": 0.004521161317825317,
+      "meanabs": 0.0006373884389176965,
+      "relmax": 0.0027711550714302415
+    },
+    {
+      "maxabs": 0.00554695725440979,
+      "meanabs": 0.0006784998695366085,
+      "relmax": 0.0039129748506667944
+    },
+    {
+      "maxabs": 0.005914777517318726,
+      "meanabs": 0.0007229444454424083,
+      "relmax": 0.004912031066820076
+    },
+    {
+      "maxabs": 0.008207634091377258,
+      "meanabs": 0.0008537484100088477,
+      "relmax": 0.00808799482279053
+    }
+  ],
+  "kv_k_vs_static": [
+    {
+      "maxabs": 0.5,
+      "meanabs": 0.001767108216881752,
+      "relmax": 0.005319174839627723
+    },
+    {
+      "maxabs": 0.25,
+      "meanabs": 0.003374443156644702,
+      "relmax": 0.0063689365073318184
+    },
+    {
+      "maxabs": 0.125,
+      "meanabs": 0.0038994767237454653,
+      "relmax": 0.006366269341491929
+    },
+    {
+      "maxabs": 0.0937492847442627,
+      "meanabs": 0.0050516026094555855,
+      "relmax": 0.008333141894981978
+    },
+    {
+      "maxabs": 0.09375333786010742,
+      "meanabs": 0.0048134964890778065,
+      "relmax": 0.013960770246258856
+    },
+    {
+      "maxabs": 0.1562488079071045,
+      "meanabs": 0.005560280755162239,
+      "relmax": 0.016123150753790602
+    },
+    {
+      "maxabs": 0.14843976497650146,
+      "meanabs": 0.005359078291803598,
+      "relmax": 0.019624080308628736
+    },
+    {
+      "maxabs": 0.1718665361404419,
+      "meanabs": 0.005826528649777174,
+      "relmax": 0.020367799493695837
+    },
+    {
+      "maxabs": 0.20384597778320312,
+      "meanabs": 0.006100964266806841,
+      "relmax": 0.017622021376474534
+    },
+    {
+      "maxabs": 0.21861767768859863,
+      "meanabs": 0.00633989367634058,
+      "relmax": 0.020939544059799173
+    },
+    {
+      "maxabs": 0.25000858306884766,
+      "meanabs": 0.006386019289493561,
+      "relmax": 0.024996321868847236
+    },
+    {
+      "maxabs": 0.25008296966552734,
+      "meanabs": 0.0064406851306557655,
+      "relmax": 0.02484534370208516
+    },
+    {
+      "maxabs": 0.18750333786010742,
+      "meanabs": 0.0069312467239797115,
+      "relmax": 0.017647626416394998
+    },
+    {
+      "maxabs": 0.098297119140625,
+      "meanabs": 0.006909220013767481,
+      "relmax": 0.010477505566479788
+    },
+    {
+      "maxabs": 0.125,
+      "meanabs": 0.00742158479988575,
+      "relmax": 0.013509109517247634
+    },
+    {
+      "maxabs": 0.1328125,
+      "meanabs": 0.007694076746702194,
+      "relmax": 0.014756095403056266
+    },
+    {
+      "maxabs": 0.10160350799560547,
+      "meanabs": 0.008409987203776836,
+      "relmax": 0.009236419890514366
+    },
+    {
+      "maxabs": 0.13281381130218506,
+      "meanabs": 0.008364624343812466,
+      "relmax": 0.01585941116550102
+    },
+    {
+      "maxabs": 0.25,
+      "meanabs": 0.009260283783078194,
+      "relmax": 0.00751846058785239
+    },
+    {
+      "maxabs": 0.1875,
+      "meanabs": 0.010008157230913639,
+      "relmax": 0.009677168805975541
+    },
+    {
+      "maxabs": 0.15624988079071045,
+      "meanabs": 0.009457426145672798,
+      "relmax": 0.006345096647002687
+    },
+    {
+      "maxabs": 0.23436808586120605,
+      "meanabs": 0.010941773653030396,
+      "relmax": 0.012254539215034114
+    },
+    {
+      "maxabs": 0.15625381469726562,
+      "meanabs": 0.011048262007534504,
+      "relmax": 0.017007196741806247
+    },
+    {
+      "maxabs": 0.1796499490737915,
+      "meanabs": 0.012273277156054974,
+      "relmax": 0.011228089693289681
+    },
+    {
+      "maxabs": 0.1798405647277832,
+      "meanabs": 0.010995147749781609,
+      "relmax": 0.02128580716673853
+    },
+    {
+      "maxabs": 0.14063477516174316,
+      "meanabs": 0.011672456748783588,
+      "relmax": 0.012858028738298586
+    },
+    {
+      "maxabs": 0.18362689018249512,
+      "meanabs": 0.012491519562900066,
+      "relmax": 0.016788741317532555
+    },
+    {
+      "maxabs": 0.2500114440917969,
+      "meanabs": 0.013813350349664688,
+      "relmax": 0.006060997836355371
+    },
+    {
+      "maxabs": 0.26561951637268066,
+      "meanabs": 0.014871508814394474,
+      "relmax": 0.026728394889939153
+    },
+    {
+      "maxabs": 0.265516996383667,
+      "meanabs": 0.015417161397635937,
+      "relmax": 0.009655163504860618
+    },
+    {
+      "maxabs": 0.26585984230041504,
+      "meanabs": 0.01502367202192545,
+      "relmax": 0.03544438465159611
+    },
+    {
+      "maxabs": 0.23006439208984375,
+      "meanabs": 0.015520291402935982,
+      "relmax": 0.018974358974358976
+    },
+    {
+      "maxabs": 0.35204315185546875,
+      "meanabs": 0.016016999259591103,
+      "relmax": 0.018801523582276377
+    },
+    {
+      "maxabs": 0.4375,
+      "meanabs": 0.01718866638839245,
+      "relmax": 0.03665051760691179
+    },
+    {
+      "maxabs": 0.6016089916229248,
+      "meanabs": 0.022033700719475746,
+      "relmax": 0.032090418963740826
+    },
+    {
+      "maxabs": 1.11700439453125,
+      "meanabs": 0.02316342480480671,
+      "relmax": 0.029366315948247505
+    }
+  ],
+  "kv_v_vs_static": [
+    {
+      "maxabs": 0.03125,
+      "meanabs": 0.0006168331601656973,
+      "relmax": 0.003787878787878788
+    },
+    {
+      "maxabs": 0.0625,
+      "meanabs": 0.0013842874905094504,
+      "relmax": 0.004310344827586207
+    },
+    {
+      "maxabs": 0.0625,
+      "meanabs": 0.0017293781274929643,
+      "relmax": 0.004878048780487805
+    },
+    {
+      "maxabs": 0.0625,
+      "meanabs": 0.0030483391601592302,
+      "relmax": 0.004830917874396135
+    },
+    {
+      "maxabs": 0.0390625,
+      "meanabs": 0.0029230043292045593,
+      "relmax": 0.007575757575757576
+    },
+    {
+      "maxabs": 0.0859375,
+      "meanabs": 0.0035493180621415377,
+      "relmax": 0.019097222222222224
+    },
+    {
+      "maxabs": 0.1015625,
+      "meanabs": 0.0037405393086373806,
+      "relmax": 0.017379679144385027
+    },
+    {
+      "maxabs": 0.140625,
+      "meanabs": 0.0045931036584079266,
+      "relmax": 0.02295918367346939
+    },
+    {
+      "maxabs": 0.125,
+      "meanabs": 0.0046765985898673534,
+      "relmax": 0.021164021164021163
+    },
+    {
+      "maxabs": 0.1328125,
+      "meanabs": 0.004727382678538561,
+      "relmax": 0.010365853658536586
+    },
+    {
+      "maxabs": 0.1796875,
+      "meanabs": 0.005254106596112251,
+      "relmax": 0.02832512315270936
+    },
+    {
+      "maxabs": 0.2578125,
+      "meanabs": 0.005296860355883837,
+      "relmax": 0.03819444444444445
+    },
+    {
+      "maxabs": 0.15625,
+      "meanabs": 0.005742884241044521,
+      "relmax": 0.024390243902439025
+    },
+    {
+      "maxabs": 0.0859375,
+      "meanabs": 0.0048255231231451035,
+      "relmax": 0.01455026455026455
+    },
+    {
+      "maxabs": 0.07421875,
+      "meanabs": 0.005474215839058161,
+      "relmax": 0.007421875
+    },
+    {
+      "maxabs": 0.078125,
+      "meanabs": 0.005897663068026304,
+      "relmax": 0.0072254335260115606
+    },
+    {
+      "maxabs": 0.0703125,
+      "meanabs": 0.006652272306382656,
+      "relmax": 0.00625
+    },
+    {
+      "maxabs": 0.11328125,
+      "meanabs": 0.007049606181681156,
+      "relmax": 0.010013812154696133
+    },
+    {
+      "maxabs": 0.109375,
+      "meanabs": 0.00763187138363719,
+      "relmax": 0.011363636363636364
+    },
+    {
+      "maxabs": 0.125,
+      "meanabs": 0.007943982258439064,
+      "relmax": 0.013422818791946308
+    },
+    {
+      "maxabs": 0.125,
+      "meanabs": 0.009561272338032722,
+      "relmax": 0.015810276679841896
+    },
+    {
+      "maxabs": 0.1484375,
+      "meanabs": 0.010100041516125202,
+      "relmax": 0.018849206349206348
+    },
+    {
+      "maxabs": 0.13336181640625,
+      "meanabs": 0.01047829445451498,
+      "relmax": 0.013855773133116884
+    },
+    {
+      "maxabs": 0.14453125,
+      "meanabs": 0.009581148624420166,
+      "relmax": 0.018208661417322834
+    },
+    {
+      "maxabs": 0.150390625,
+      "meanabs": 0.009597298689186573,
+      "relmax": 0.015326433121019108
+    },
+    {
+      "maxabs": 0.140625,
+      "meanabs": 0.011241238564252853,
+      "relmax": 0.016544117647058824
+    },
+    {
+      "maxabs": 0.21484375,
+      "meanabs": 0.012770210392773151,
+      "relmax": 0.02817622950819672
+    },
+    {
+      "maxabs": 0.201171875,
+      "meanabs": 0.014996565878391266,
+      "relmax": 0.0245706106870229
+    },
+    {
+      "maxabs": 0.228515625,
+      "meanabs": 0.016889765858650208,
+      "relmax": 0.02925
+    },
+    {
+      "maxabs": 0.3125,
+      "meanabs": 0.01720162108540535,
+      "relmax": 0.04065040650406504
+    },
+    {
+      "maxabs": 0.421875,
+      "meanabs": 0.020011238753795624,
+      "relmax": 0.0533596837944664
+    },
+    {
+      "maxabs": 0.4140625,
+      "meanabs": 0.023597635328769684,
+      "relmax": 0.03468586387434555
+    },
+    {
+      "maxabs": 0.796875,
+      "meanabs": 0.03943127766251564,
+      "relmax": 0.07044198895027624
+    },
+    {
+      "maxabs": 1.625,
+      "meanabs": 0.05642131716012955,
+      "relmax": 0.10655737704918032
+    },
+    {
+      "maxabs": 0.97119140625,
+      "meanabs": 0.033753372728824615,
+      "relmax": 0.06875691371681415
+    },
+    {
+      "maxabs": 1.19921875,
+      "meanabs": 0.047564271837472916,
+      "relmax": 0.07896090534979423
+    }
+  ],
+  "final_vs_fresh_official": {
+    "maxabs": 0.013089805841445923,
+    "meanabs": 0.001052395673468709,
+    "relmax": 0.012914887083060513
+  },
+  "unnormalized_vs_official_bank": {
+    "maxabs": 0.008919477462768555,
+    "meanabs": 0.000692906731273979,
+    "relmax": 0.006639698014515366
+  },
+  "unnormalized_vs_fresh_official": {
+    "maxabs": 0.01121664047241211,
+    "meanabs": 0.0009080463787540793,
+    "relmax": 0.008330315071157652
+  },
+  "max_velocity_rel": 0.007882490607148624,
+  "max_k_rel": 0.03665051760691179,
+  "max_v_rel": 0.10655737704918032
+}
+RESULT: FAIL
+STRICT_RESULT: FAIL
+EXPERIMENTAL_RESULT: PASS
++ export WALLX_IREE_FULL_FLOW_VMFB=/home/zhaosiying/codebase/wall-x-iree-clean/artifacts/bin/full_flow.vmfb
++ WALLX_IREE_FULL_FLOW_VMFB=/home/zhaosiying/codebase/wall-x-iree-clean/artifacts/bin/full_flow.vmfb
++ .venv-serve/bin/python tests/iree_wallx/verify_backend_short_bucket.py --backend expanded
+typed TrainConfig loading failed; falling back to raw data config: task.dof_config is required (cannot be empty)
+/home/zhaosiying/codebase/wall-x-iree-clean/.venv-serve/lib/python3.12/site-packages/transformers/modeling_rope_utils.py:936: FutureWarning: `rope_config_validation` is deprecated and has been removed. Its functionality has been moved to RotaryEmbeddingConfigMixin.validate_rope method. PreTrainedConfig inherits this class, so please call self.validate_rope() instead. Also, make sure to use the new rope_parameters syntax. You can call self.standardize_rope_params() in the meantime.
+  warnings.warn(
+Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section'}
+The new embeddings will be initialized from a multivariate normal distribution that has old embeddings' mean and covariance. As described in this article: https://nlp.stanford.edu/~johnhew/vocab-expansion.html. To disable this, use `mean_resizing=False`
+backend: expanded
+original_seq: 635
+padded_seq: 638
+short_official_shape: (1, 32, 26)
+short_iree_shape: (1, 32, 26)
+short_physical_action_maxabs: 0.01611340045928955
+short_physical_action_relmax: 0.011734910431767507
+SHORT-BUCKET PASS
++ .venv-serve/bin/python tools/iree/compare_flow_traces.py /tmp/wallx_native_full_flow_production.npz /tmp/wallx_native_full_flow_trace.npz
+{
+  "actual": "/tmp/wallx_native_full_flow_production.npz",
+  "reference": "/tmp/wallx_native_full_flow_trace.npz",
+  "predict_action": {
+    "maxabs": 0.0,
+    "relmax": 0.0
+  }
+}
+RESULT: PASS

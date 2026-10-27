@@ -1,0 +1,50 @@
++ set -euo pipefail
++ set -x
++ cd /home/zhaosiying/codebase/wall-x-iree-clean
++ /usr/bin/free -g
+               total        used        free      shared  buff/cache   available
+Mem:              47           9          32           8          14          37
+Swap:             12           8           3
++ .venv-serve/bin/python -c 'from pathlib import Path; gb=int(Path("/proc/meminfo").read_text().split("MemAvailable:")[1].split()[0])//(1024*1024); assert gb >= 16, f"available memory {gb} GB < 16 GB"'
++ nvidia-smi --query-gpu=name,memory.used,compute_cap --format=csv
+name, memory.used [MiB], compute_cap
+NVIDIA GeForce RTX 5090 Laptop GPU, 0 MiB, 12.0
++ export PYTHONPATH=/home/zhaosiying/codebase/wall-x-iree-clean
++ PYTHONPATH=/home/zhaosiying/codebase/wall-x-iree-clean
++ export LD_LIBRARY_PATH=/home/zhaosiying/codebase/wall-x-iree-clean/build/cudalib:
++ LD_LIBRARY_PATH=/home/zhaosiying/codebase/wall-x-iree-clean/build/cudalib:
++ export WALLX_CKPT=/home/zhaosiying/codebase/wallx-jax/weights/wall-oss-0.5
++ WALLX_CKPT=/home/zhaosiying/codebase/wallx-jax/weights/wall-oss-0.5
++ export WALLX_BACKEND=iree-expanded
++ WALLX_BACKEND=iree-expanded
++ export WALLX_VISION_ATTN_IMPLEMENTATION=eager
++ WALLX_VISION_ATTN_IMPLEMENTATION=eager
++ .venv-serve/bin/python tools/iree/export_full_flow.py --vision-attn eager-bf16
+typed TrainConfig loading failed; falling back to raw data config: task.dof_config is required (cannot be empty)
+/home/zhaosiying/codebase/wall-x-iree-clean/.venv-serve/lib/python3.12/site-packages/transformers/modeling_rope_utils.py:936: FutureWarning: `rope_config_validation` is deprecated and has been removed. Its functionality has been moved to RotaryEmbeddingConfigMixin.validate_rope method. PreTrainedConfig inherits this class, so please call self.validate_rope() instead. Also, make sure to use the new rope_parameters syntax. You can call self.standardize_rope_params() in the meantime.
+  warnings.warn(
+Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section'}
+The new embeddings will be initialized from a multivariate normal distribution that has old embeddings' mean and covariance. As described in this article: https://nlp.stanford.edu/~johnhew/vocab-expansion.html. To disable this, use `mean_resizing=False`
+full-flow profile: VisionProfile(grid_thw=((1, 32, 32), (1, 32, 32)), patch_tokens=2048, merged_tokens=512, window_tokens=64, num_windows=32, full_segment_tokens=(1024, 1024)) state_string: True trace: False vision_attention: eager-bf16
+/home/zhaosiying/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/copyreg.py:99: FutureWarning: `isinstance(treespec, LeafSpec)` is deprecated, use `isinstance(treespec, TreeSpec) and treespec.is_leaf()` instead.
+  return cls.__new__(cls, *args)
+mlir: /home/zhaosiying/codebase/wall-x-iree-clean/artifacts/ir/full_flow.mlir 15608302 bytes
+params: /home/zhaosiying/codebase/wall-x-iree-clean/artifacts/bin/full_flow.weights.irpa 8341872640 bytes
++ .venv-serve/bin/python tools/iree/export_full_flow.py --trace --skip-params --vision-attn eager-bf16
+typed TrainConfig loading failed; falling back to raw data config: task.dof_config is required (cannot be empty)
+/home/zhaosiying/codebase/wall-x-iree-clean/.venv-serve/lib/python3.12/site-packages/transformers/modeling_rope_utils.py:936: FutureWarning: `rope_config_validation` is deprecated and has been removed. Its functionality has been moved to RotaryEmbeddingConfigMixin.validate_rope method. PreTrainedConfig inherits this class, so please call self.validate_rope() instead. Also, make sure to use the new rope_parameters syntax. You can call self.standardize_rope_params() in the meantime.
+  warnings.warn(
+Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section'}
+The new embeddings will be initialized from a multivariate normal distribution that has old embeddings' mean and covariance. As described in this article: https://nlp.stanford.edu/~johnhew/vocab-expansion.html. To disable this, use `mean_resizing=False`
+full-flow profile: VisionProfile(grid_thw=((1, 32, 32), (1, 32, 32)), patch_tokens=2048, merged_tokens=512, window_tokens=64, num_windows=32, full_segment_tokens=(1024, 1024)) state_string: True trace: True vision_attention: eager-bf16
+/home/zhaosiying/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/lib/python3.12/copyreg.py:99: FutureWarning: `isinstance(treespec, LeafSpec)` is deprecated, use `isinstance(treespec, TreeSpec) and treespec.is_leaf()` instead.
+  return cls.__new__(cls, *args)
+mlir: /home/zhaosiying/codebase/wall-x-iree-clean/artifacts/ir/full_flow_trace.mlir 15610637 bytes
++ stat -L -c '%n %s bytes' artifacts/ir/full_flow.mlir artifacts/ir/full_flow_trace.mlir artifacts/bin/full_flow.weights.irpa
+artifacts/ir/full_flow.mlir 15608302 bytes
+artifacts/ir/full_flow_trace.mlir 15610637 bytes
+artifacts/bin/full_flow.weights.irpa 8341872640 bytes
++ sha256sum artifacts/ir/full_flow.mlir artifacts/ir/full_flow_trace.mlir artifacts/bin/full_flow.weights.irpa
+e6593fc2d1965af022c526033177ca3b95451dce0a006ac9c971676c524af037  artifacts/ir/full_flow.mlir
+620386e0bdb224bbcab9752ad0154fef4a6d6b45a48f293dc146b814be178bc6  artifacts/ir/full_flow_trace.mlir
+0f8f9a0b938ddc67e92ff59801ad50ab7690055ebdccf2449802f014652fb371  artifacts/bin/full_flow.weights.irpa

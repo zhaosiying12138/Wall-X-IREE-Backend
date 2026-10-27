@@ -1,0 +1,386 @@
+Launching Wall-X serving:
+  /home/zhaosiying/codebase/wall-x-iree-clean/.venv-serve/bin/python  -m  wall_x._vendor.harrix.serving.launch_serving  --env  LIBERO  --host  0.0.0.0  --port  44661  --image-passing-mode  base64  --no-serialize-actions  model-config:server-model-config  --model-config.checkpoint-path  /home/zhaosiying/codebase/wallx-jax/weights/wall-oss-0.5  --model-config.action-horizon  32  --model-config.robot-type  desktop  --model-config.robot-action-interpolate-multiplier  1  --model-config.robot-action-end-ratio  1.0  --model-config.model-device  cuda  --model-config.train-config-path  /home/zhaosiying/codebase/wallx-jax/weights/wall-oss-0.5/config.yml  --model-config.cam-names  face_view  right_wrist_view
+2026-10-27 19:56:42,218 - __main__ - INFO - Starting model server
+2026-10-27 19:56:42,218 - __main__ - INFO - Model type: wallx
+2026-10-27 19:56:42,218 - __main__ - INFO - Environment: libero
+2026-10-27 19:56:42,218 - __main__ - INFO - Port: 44661
+2026-10-27 19:56:42,218 - __main__ - INFO - Host: 0.0.0.0
+2026-10-27 19:56:42,218 - __main__ - INFO - Serialize actions: False
+2026-10-27 19:56:43,862 - qwen_vl_utils.vision_process - INFO - set VIDEO_TOTAL_PIXELS: 90316800
+2026-10-27 19:56:44,780 - wall_x._vendor.harrix.serving._wallx_infer.logger - WARNING - colorlog not installed. Install with: pip install colorlog
+2026-10-27 19:56:45,224 - wall_x._vendor.harrix.serving._wallx_infer.infer_config - INFO - [LoadConfig] Found /home/zhaosiying/codebase/wallx-jax/weights/wall-oss-0.5/preprocessor_config.json, override processor_path.
+2026-10-27 19:56:45,232 - wall_x._vendor.harrix.serving._wallx_infer.infer_config - INFO - [LoadModelConfig] Using checkpoint config.json: /home/zhaosiying/codebase/wallx-jax/weights/wall-oss-0.5/config.json
+2026-10-27 19:56:45,375 - wall_x._vendor.harrix.serving._wallx_infer.infer_config - INFO - [LoadModelConfig] Loading model config from: /home/zhaosiying/codebase/wallx-jax/weights/wall-oss-0.5/config.json
+/home/zhaosiying/codebase/wall-x-iree-clean/.venv-serve/lib/python3.12/site-packages/transformers/modeling_rope_utils.py:936: FutureWarning: `rope_config_validation` is deprecated and has been removed. Its functionality has been moved to RotaryEmbeddingConfigMixin.validate_rope method. PreTrainedConfig inherits this class, so please call self.validate_rope() instead. Also, make sure to use the new rope_parameters syntax. You can call self.standardize_rope_params() in the meantime.
+  warnings.warn(
+Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section'}
+2026-10-27 19:56:45,375 - wall_x._vendor.harrix.serving._wallx_infer.infer_config - INFO - [LoadModelConfig] vision _attn_implementation=eager (override via WALLX_VISION_ATTN_IMPLEMENTATION)
+2026-10-27 19:56:45,375 - wall_x._vendor.harrix.serving._wallx_infer.infer_config - INFO - [LoadModelConfig] Model config loaded and updated successfully.
+2026-10-27 19:56:45,376 - wall_x._vendor.harrix.serving._wallx_infer.infer_config - WARNING - [InferConfig] Typed config load failed for /home/zhaosiying/codebase/wallx-jax/weights/wall-oss-0.5/config.yml: task.dof_config is required (cannot be empty)
+[19:56:45] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     normalizers x2_normal registered
+[19:56:46] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     initializing model: qwen2_5 (Qwen2_5_VLMoEForAction)
+2026-10-27 19:57:09,885 - wall_x.model.core.action.normalizer - INFO - self.dof_config: {'follow_left_ee_cartesian_pos_relative': 3, 'follow_left_ee_rotation_6D_relative': 6, 'follow_left_gripper': 1, 'follow_right_ee_cartesian_pos_relative': 3, 'follow_right_ee_rotation_6D_relative': 6, 'follow_right_gripper': 1, 'velocity_decomposed': 3, 'height': 1, 'head_actions': 2}; action_dim: 26; self.agent_pos_config: {'follow_left_ee_cartesian_pos': 3, 'follow_left_ee_rotation_6D': 6, 'follow_left_gripper': 1, 'follow_right_ee_cartesian_pos': 3, 'follow_right_ee_rotation_6D': 6, 'follow_right_gripper': 1, 'velocity_decomposed': 3, 'height': 1, 'head_actions': 2}; propri_dim: 26
+[19:57:11] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     *** model attention implementation: sdpa ***
+[19:57:11] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     *** model.visual attention implementation: eager ***
+[19:57:11] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     resizing model token embeddings
+[19:57:12] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     token embedding resize done
+[19:57:12] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     casting selected params to bfloat16
+2026-10-27 19:57:12,747 - wall_x.model.core.vla_mixin - INFO - Running manual dtype conversion (no FSDP).
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     bfloat16 cast done
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     loading safetensors checkpoint: /home/zhaosiying/codebase/wallx-jax/weights/wall-oss-0.5/model.safetensors
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     The weights is fused, skipping conversion.
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.DobbE
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.RH20T
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.UMI-biarm
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.agibotworld_alpha
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.austin_buds
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.austin_sirius
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.bc_z
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.berkeley_autolab_ur5
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.berkeley_cable_routing
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.berkeley_fanuc_manipulation
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.bridge_data_v2
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.droid
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.ex_normal
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.fmb
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.fractal
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.furniture_bench
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.galaxea_lerobot_v21
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.jaco_play
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.nyu_rot
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.realomin_umi
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.robochallenge_Franka
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.robochallenge_UR5
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.robochallenge_aloha
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.robochallenge_arx5
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.robocoin_aitbot_mmk2
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.robocoin_aloha
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.robocoin_alpha_bot
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.robocoin_cobot
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.robocoin_galaxea_r1_lite
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.robocoin_leju
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.robocoin_realman_rmc
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.robocoin_ruantong_a2d
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.robomind_agilex_mobile
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.robomind_franka
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.robomind_simulation
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.robomind_tienkung_gello
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.robomind_tienkung_xsens
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.robomind_ur
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.robomind_v2_0_agilex
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.robomind_v2_0_agilex_mobile
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.robomind_v2_0_ark
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.robomind_v2_0_ark_mobile
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.robomind_v2_0_franka
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.robomind_v2_0_franka_sim
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.robomind_v2_0_tianyi
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.robomind_v2_0_tianyi_mobile
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.robomind_v2_0_tienkung
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.robomind_v2_0_tienkung_sim
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.robomind_v2_0_ur5
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.robomind_v2_0_ur5_dex
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.stanford_hydra
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.stanford_kuka_multimodal
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.taco_play
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.utaustin_mutex
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.viola
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.delta.x2_normal
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.DobbE
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.RH20T
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.UMI-biarm
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.agibotworld_alpha
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.austin_buds
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.austin_sirius
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.bc_z
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.berkeley_autolab_ur5
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.berkeley_cable_routing
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.berkeley_fanuc_manipulation
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.bridge_data_v2
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.droid
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.ex_normal
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.fmb
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.fractal
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.furniture_bench
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.galaxea_lerobot_v21
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.jaco_play
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.nyu_rot
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.realomin_umi
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.robochallenge_Franka
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.robochallenge_UR5
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.robochallenge_aloha
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.robochallenge_arx5
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.robocoin_aitbot_mmk2
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.robocoin_aloha
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.robocoin_alpha_bot
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.robocoin_cobot
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.robocoin_galaxea_r1_lite
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.robocoin_leju
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.robocoin_realman_rmc
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.robocoin_ruantong_a2d
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.robomind_agilex_mobile
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.robomind_franka
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.robomind_simulation
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.robomind_tienkung_gello
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.robomind_tienkung_xsens
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.robomind_ur
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.robomind_v2_0_agilex
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.robomind_v2_0_agilex_mobile
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.robomind_v2_0_ark
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.robomind_v2_0_ark_mobile
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.robomind_v2_0_franka
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.robomind_v2_0_franka_sim
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.robomind_v2_0_tianyi
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.robomind_v2_0_tianyi_mobile
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.robomind_v2_0_tienkung
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.robomind_v2_0_tienkung_sim
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.robomind_v2_0_ur5
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.robomind_v2_0_ur5_dex
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.stanford_hydra
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.stanford_kuka_multimodal
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.taco_play
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.utaustin_mutex
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.viola
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_action.min.x2_normal
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.DobbE
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.RH20T
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.UMI-biarm
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.agibotworld_alpha
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.austin_buds
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.austin_sirius
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.bc_z
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.berkeley_autolab_ur5
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.berkeley_cable_routing
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.berkeley_fanuc_manipulation
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.bridge_data_v2
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.droid
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.ex_normal
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.fmb
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.fractal
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.furniture_bench
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.galaxea_lerobot_v21
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.jaco_play
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.nyu_rot
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.realomin_umi
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.robochallenge_Franka
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.robochallenge_UR5
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.robochallenge_aloha
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.robochallenge_arx5
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.robocoin_aitbot_mmk2
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.robocoin_aloha
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.robocoin_alpha_bot
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.robocoin_cobot
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.robocoin_galaxea_r1_lite
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.robocoin_leju
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.robocoin_realman_rmc
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.robocoin_ruantong_a2d
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.robomind_agilex_mobile
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.robomind_franka
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.robomind_simulation
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.robomind_tienkung_gello
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.robomind_tienkung_xsens
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.robomind_ur
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.robomind_v2_0_agilex
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.robomind_v2_0_agilex_mobile
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.robomind_v2_0_ark
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.robomind_v2_0_ark_mobile
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.robomind_v2_0_franka
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.robomind_v2_0_franka_sim
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.robomind_v2_0_tianyi
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.robomind_v2_0_tianyi_mobile
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.robomind_v2_0_tienkung
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.robomind_v2_0_tienkung_sim
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.robomind_v2_0_ur5
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.robomind_v2_0_ur5_dex
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.stanford_hydra
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.stanford_kuka_multimodal
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.taco_play
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.utaustin_mutex
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.viola
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.delta.x2_normal
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.DobbE
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.RH20T
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.UMI-biarm
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.agibotworld_alpha
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.austin_buds
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.austin_sirius
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.bc_z
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.berkeley_autolab_ur5
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.berkeley_cable_routing
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.berkeley_fanuc_manipulation
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.bridge_data_v2
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.droid
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.ex_normal
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.fmb
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.fractal
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.furniture_bench
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.galaxea_lerobot_v21
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.jaco_play
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.nyu_rot
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.realomin_umi
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.robochallenge_Franka
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.robochallenge_UR5
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.robochallenge_aloha
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.robochallenge_arx5
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.robocoin_aitbot_mmk2
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.robocoin_aloha
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.robocoin_alpha_bot
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.robocoin_cobot
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.robocoin_galaxea_r1_lite
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.robocoin_leju
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.robocoin_realman_rmc
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.robocoin_ruantong_a2d
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.robomind_agilex_mobile
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.robomind_franka
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.robomind_simulation
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.robomind_tienkung_gello
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.robomind_tienkung_xsens
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.robomind_ur
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.robomind_v2_0_agilex
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.robomind_v2_0_agilex_mobile
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.robomind_v2_0_ark
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.robomind_v2_0_ark_mobile
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.robomind_v2_0_franka
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.robomind_v2_0_franka_sim
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.robomind_v2_0_tianyi
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.robomind_v2_0_tianyi_mobile
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.robomind_v2_0_tienkung
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.robomind_v2_0_tienkung_sim
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.robomind_v2_0_ur5
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.robomind_v2_0_ur5_dex
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.stanford_hydra
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.stanford_kuka_multimodal
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.taco_play
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.utaustin_mutex
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.viola
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Not used parameter: action_preprocessor.normalizer_propri.min.x2_normal
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Cropped 'model.embed_tokens.weight': checkpoint (155765, 2048) -> model (151667, 2048)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.0.mlp.down_proj.weight': checkpoint (1280, 3420) -> model (1280, 3456) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.0.mlp.gate_up_proj.bias': checkpoint (6840,) -> model (6912,) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.0.mlp.gate_up_proj.weight': checkpoint (6840, 1280) -> model (6912, 1280) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.1.mlp.down_proj.weight': checkpoint (1280, 3420) -> model (1280, 3456) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.1.mlp.gate_up_proj.bias': checkpoint (6840,) -> model (6912,) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.1.mlp.gate_up_proj.weight': checkpoint (6840, 1280) -> model (6912, 1280) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.10.mlp.down_proj.weight': checkpoint (1280, 3420) -> model (1280, 3456) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.10.mlp.gate_up_proj.bias': checkpoint (6840,) -> model (6912,) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.10.mlp.gate_up_proj.weight': checkpoint (6840, 1280) -> model (6912, 1280) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.11.mlp.down_proj.weight': checkpoint (1280, 3420) -> model (1280, 3456) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.11.mlp.gate_up_proj.bias': checkpoint (6840,) -> model (6912,) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.11.mlp.gate_up_proj.weight': checkpoint (6840, 1280) -> model (6912, 1280) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.12.mlp.down_proj.weight': checkpoint (1280, 3420) -> model (1280, 3456) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.12.mlp.gate_up_proj.bias': checkpoint (6840,) -> model (6912,) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.12.mlp.gate_up_proj.weight': checkpoint (6840, 1280) -> model (6912, 1280) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.13.mlp.down_proj.weight': checkpoint (1280, 3420) -> model (1280, 3456) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.13.mlp.gate_up_proj.bias': checkpoint (6840,) -> model (6912,) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.13.mlp.gate_up_proj.weight': checkpoint (6840, 1280) -> model (6912, 1280) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.14.mlp.down_proj.weight': checkpoint (1280, 3420) -> model (1280, 3456) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.14.mlp.gate_up_proj.bias': checkpoint (6840,) -> model (6912,) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.14.mlp.gate_up_proj.weight': checkpoint (6840, 1280) -> model (6912, 1280) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.15.mlp.down_proj.weight': checkpoint (1280, 3420) -> model (1280, 3456) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.15.mlp.gate_up_proj.bias': checkpoint (6840,) -> model (6912,) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.15.mlp.gate_up_proj.weight': checkpoint (6840, 1280) -> model (6912, 1280) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.16.mlp.down_proj.weight': checkpoint (1280, 3420) -> model (1280, 3456) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.16.mlp.gate_up_proj.bias': checkpoint (6840,) -> model (6912,) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.16.mlp.gate_up_proj.weight': checkpoint (6840, 1280) -> model (6912, 1280) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.17.mlp.down_proj.weight': checkpoint (1280, 3420) -> model (1280, 3456) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.17.mlp.gate_up_proj.bias': checkpoint (6840,) -> model (6912,) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.17.mlp.gate_up_proj.weight': checkpoint (6840, 1280) -> model (6912, 1280) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.18.mlp.down_proj.weight': checkpoint (1280, 3420) -> model (1280, 3456) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.18.mlp.gate_up_proj.bias': checkpoint (6840,) -> model (6912,) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.18.mlp.gate_up_proj.weight': checkpoint (6840, 1280) -> model (6912, 1280) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.19.mlp.down_proj.weight': checkpoint (1280, 3420) -> model (1280, 3456) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.19.mlp.gate_up_proj.bias': checkpoint (6840,) -> model (6912,) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.19.mlp.gate_up_proj.weight': checkpoint (6840, 1280) -> model (6912, 1280) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.2.mlp.down_proj.weight': checkpoint (1280, 3420) -> model (1280, 3456) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.2.mlp.gate_up_proj.bias': checkpoint (6840,) -> model (6912,) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.2.mlp.gate_up_proj.weight': checkpoint (6840, 1280) -> model (6912, 1280) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.20.mlp.down_proj.weight': checkpoint (1280, 3420) -> model (1280, 3456) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.20.mlp.gate_up_proj.bias': checkpoint (6840,) -> model (6912,) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.20.mlp.gate_up_proj.weight': checkpoint (6840, 1280) -> model (6912, 1280) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.21.mlp.down_proj.weight': checkpoint (1280, 3420) -> model (1280, 3456) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.21.mlp.gate_up_proj.bias': checkpoint (6840,) -> model (6912,) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.21.mlp.gate_up_proj.weight': checkpoint (6840, 1280) -> model (6912, 1280) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.22.mlp.down_proj.weight': checkpoint (1280, 3420) -> model (1280, 3456) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.22.mlp.gate_up_proj.bias': checkpoint (6840,) -> model (6912,) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.22.mlp.gate_up_proj.weight': checkpoint (6840, 1280) -> model (6912, 1280) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.23.mlp.down_proj.weight': checkpoint (1280, 3420) -> model (1280, 3456) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.23.mlp.gate_up_proj.bias': checkpoint (6840,) -> model (6912,) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.23.mlp.gate_up_proj.weight': checkpoint (6840, 1280) -> model (6912, 1280) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.24.mlp.down_proj.weight': checkpoint (1280, 3420) -> model (1280, 3456) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.24.mlp.gate_up_proj.bias': checkpoint (6840,) -> model (6912,) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.24.mlp.gate_up_proj.weight': checkpoint (6840, 1280) -> model (6912, 1280) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.25.mlp.down_proj.weight': checkpoint (1280, 3420) -> model (1280, 3456) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.25.mlp.gate_up_proj.bias': checkpoint (6840,) -> model (6912,) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.25.mlp.gate_up_proj.weight': checkpoint (6840, 1280) -> model (6912, 1280) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.26.mlp.down_proj.weight': checkpoint (1280, 3420) -> model (1280, 3456) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.26.mlp.gate_up_proj.bias': checkpoint (6840,) -> model (6912,) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.26.mlp.gate_up_proj.weight': checkpoint (6840, 1280) -> model (6912, 1280) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.27.mlp.down_proj.weight': checkpoint (1280, 3420) -> model (1280, 3456) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.27.mlp.gate_up_proj.bias': checkpoint (6840,) -> model (6912,) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.27.mlp.gate_up_proj.weight': checkpoint (6840, 1280) -> model (6912, 1280) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.28.mlp.down_proj.weight': checkpoint (1280, 3420) -> model (1280, 3456) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.28.mlp.gate_up_proj.bias': checkpoint (6840,) -> model (6912,) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.28.mlp.gate_up_proj.weight': checkpoint (6840, 1280) -> model (6912, 1280) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.29.mlp.down_proj.weight': checkpoint (1280, 3420) -> model (1280, 3456) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.29.mlp.gate_up_proj.bias': checkpoint (6840,) -> model (6912,) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.29.mlp.gate_up_proj.weight': checkpoint (6840, 1280) -> model (6912, 1280) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.3.mlp.down_proj.weight': checkpoint (1280, 3420) -> model (1280, 3456) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.3.mlp.gate_up_proj.bias': checkpoint (6840,) -> model (6912,) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.3.mlp.gate_up_proj.weight': checkpoint (6840, 1280) -> model (6912, 1280) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.30.mlp.down_proj.weight': checkpoint (1280, 3420) -> model (1280, 3456) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.30.mlp.gate_up_proj.bias': checkpoint (6840,) -> model (6912,) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.30.mlp.gate_up_proj.weight': checkpoint (6840, 1280) -> model (6912, 1280) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.31.mlp.down_proj.weight': checkpoint (1280, 3420) -> model (1280, 3456) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.31.mlp.gate_up_proj.bias': checkpoint (6840,) -> model (6912,) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.31.mlp.gate_up_proj.weight': checkpoint (6840, 1280) -> model (6912, 1280) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.4.mlp.down_proj.weight': checkpoint (1280, 3420) -> model (1280, 3456) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.4.mlp.gate_up_proj.bias': checkpoint (6840,) -> model (6912,) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.4.mlp.gate_up_proj.weight': checkpoint (6840, 1280) -> model (6912, 1280) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.5.mlp.down_proj.weight': checkpoint (1280, 3420) -> model (1280, 3456) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.5.mlp.gate_up_proj.bias': checkpoint (6840,) -> model (6912,) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.5.mlp.gate_up_proj.weight': checkpoint (6840, 1280) -> model (6912, 1280) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.6.mlp.down_proj.weight': checkpoint (1280, 3420) -> model (1280, 3456) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.6.mlp.gate_up_proj.bias': checkpoint (6840,) -> model (6912,) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.6.mlp.gate_up_proj.weight': checkpoint (6840, 1280) -> model (6912, 1280) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.7.mlp.down_proj.weight': checkpoint (1280, 3420) -> model (1280, 3456) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.7.mlp.gate_up_proj.bias': checkpoint (6840,) -> model (6912,) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.7.mlp.gate_up_proj.weight': checkpoint (6840, 1280) -> model (6912, 1280) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.8.mlp.down_proj.weight': checkpoint (1280, 3420) -> model (1280, 3456) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.8.mlp.gate_up_proj.bias': checkpoint (6840,) -> model (6912,) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.8.mlp.gate_up_proj.weight': checkpoint (6840, 1280) -> model (6912, 1280) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.9.mlp.down_proj.weight': checkpoint (1280, 3420) -> model (1280, 3456) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.9.mlp.gate_up_proj.bias': checkpoint (6840,) -> model (6912,) (tail keeps model init)
+[19:57:13] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     Padded 'visual.blocks.9.mlp.gate_up_proj.weight': checkpoint (6840, 1280) -> model (6912, 1280) (tail keeps model init)
+[19:57:14] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     load_state_dict result: _IncompatibleKeys(missing_keys=['lm_head.weight'], unexpected_keys=[])
+2026-10-27 19:57:15,933 - wall_x.model.core.vla_mixin - INFO - Running manual dtype conversion (no FSDP).
+[19:57:16] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     model /home/zhaosiying/codebase/wallx-jax/weights/wall-oss-0.5 loaded
+[19:57:16] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     normalizers x2_normal registered
+2026-10-27 19:57:16,018 - wall_x._vendor.harrix.serving.policy.wall_x_policy - INFO - Image passing mode: base64, robot_type: desktop, default_infer_mode: flow, serialize_actions: False, smooth_action: False, smooth_gripper: True
+2026-10-27 19:57:16,020 - __main__ - INFO - Server hostname: Admin
+2026-10-27 19:57:16,020 - __main__ - INFO - Server IP: 127.0.1.1
+2026-10-27 19:57:16,021 - __main__ - INFO - Server will be available at: ws://0.0.0.0:44661
+2026-10-27 19:57:16,021 - __main__ - INFO - Health check endpoint: http://0.0.0.0:44661/healthz
+2026-10-27 19:57:16,021 - __main__ - INFO - Batching: disabled
+2026-10-27 19:57:16,021 - __main__ - INFO - Starting server...
+2026-10-27 19:57:16,023 - websockets.server - INFO - server listening on 0.0.0.0:44661
+2026-10-27 19:57:16,023 - wall_x._vendor.harrix.serving.websocket_policy_server - INFO - Server started on 0.0.0.0:44661 (mode=single)
+2026-10-27 19:57:16,178 - websockets.server - INFO - connection rejected (200 OK)
+2026-10-27 19:57:16,183 - websockets.server - INFO - connection rejected (200 OK)
+2026-10-27 19:57:16,323 - websockets.server - INFO - connection open
+2026-10-27 19:57:16,324 - wall_x._vendor.harrix.serving.websocket_policy_server - INFO - Connection from ('127.0.0.1', 40374) opened
+2026-10-27 19:57:16,353 - wall_x.utils.timers - INFO - get_observation took 0.493 ms to execute
+[19:57:16] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     generating flow action
+[19:57:16] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     flow action instruction: pick up the object
+2026-10-27 19:57:16,353 - wall_x.utils.timers - INFO - get_text_for_action took 0.015 ms to execute
+2026-10-27 19:57:16,363 - wall_x.utils.timers - INFO - _resize_images took 5.909 ms to execute
+2026-10-27 19:57:16,363 - wall_x.utils.timers - INFO - resize_images took 6.019 ms to execute
+2026-10-27 19:57:16,439 - wall_x.utils.timers - INFO - preprocesser_call took 75.661 ms to execute
+2026-10-27 19:57:16,440 - wall_x.utils.timers - INFO - convert_action_token_id and post  took 0.510 ms to execute
+2026-10-27 19:57:16,440 - wall_x.utils.timers - INFO - construct_model_input took 86.274 ms to execute
+[19:57:16] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     generate_flow_action start (horizon=32, flow_steps=10, device=cuda)
+[19:57:16] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     CUDA mem before flow: free=14.58 GiB / total=23.89 GiB
+[19:57:23] [  MODEL   ] [MODEL.WallxModelWrapper] WARNING  serving backend ACTIVE (name=iree-expanded; no implicit fallback)
+2026-10-27 19:57:24,401 - wall_x.utils.timers - INFO - generate_flow_action took 7960.586 ms to execute
+[19:57:24] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     flow action generation done
+[19:57:24] [  MODEL   ] [MODEL.WallxModelWrapper] INFO     saved flow action to robot_state_action_data
+2026-10-27 19:57:24,402 - wall_x.utils.timers - INFO - infer_flow took 8048.800 ms to execute
+2026-10-27 19:57:24,411 - wall_x._vendor.harrix.serving.websocket_policy_server - INFO - Connection from ('127.0.0.1', 40374) closed

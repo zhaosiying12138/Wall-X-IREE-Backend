@@ -1,0 +1,15 @@
+# Source: /tmp/wallx_native_full_flow_phases/module.1.input.mlir
+# Bytes: 9304169
+
+# Pattern: 0; hits=2
+873:   util.func public @main$async(%arg0: !hal.buffer_view, %arg1: !hal.buffer_view, %arg2: !hal.buffer_view, %arg3: !hal.buffer_view, %arg4: !hal.buffer_view, %arg5: !hal.buffer_view, %arg6: !hal.buffer_view, %arg7: !hal.buffer_view, %arg8: !hal.buffer_view, %arg9: !hal.buffer_view, %arg10: !hal.fence, %arg11: !hal.fence) -> !hal.buffer_view attributes {inlinin
+113825:   util.func public @main(%arg0: !hal.buffer_view, %arg1: !hal.buffer_view, %arg2: !hal.buffer_view, %arg3: !hal.buffer_view, %arg4: !hal.buffer_view, %arg5: !hal.buffer_view, %arg6: !hal.buffer_view, %arg7: !hal.buffer_view, %arg8: !hal.buffer_view, %arg9: !hal.buffer_view) -> !hal.buffer_view attributes {iree.abi.stub} {
+
+# Pattern: 1; hits=1
+113831:     %1 = util.call @main$async(%arg0, %arg1, %arg2, %arg3, %arg4, %arg5, %arg6, %arg7, %arg8, %arg9, %0, %fence) : (!hal.buffer_view, !hal.buffer_view, !hal.buffer_view, !hal.buffer_view, !hal.buffer_view, !hal.buffer_view, !hal.buffer_view, !hal.buffer_view, !hal.buffer_view, !hal.buffer_view, !hal.fence, !hal.fence) -> !hal.buffer_view
+
+# Pattern: 2; hits=324
+30733:     %5562 = iree_linalg_ext.attention <indexing_maps = [#map24, #map25, #map26, #map27, #map28, #map29]> ins(%collapsed_3437, %collapsed_3438, %collapsed_3439, %cst, %collapsed_3440 : tensor<16x32x128xbf16>, tensor<16x638x128xbf16>, tensor<16x638x128xbf16>, f32, tensor<16x32x638xi1>) outs(%5561 : tensor<16x32x128xbf16>) {
+30999:     %5611 = iree_linalg_ext.attention <indexing_maps = [#map24, #map25, #map26, #map27, #map28, #map29]> ins(%collapsed_3475, %collapsed_3476, %collapsed_3477, %cst, %collapsed_3440 : tensor<16x32x128xbf16>, tensor<16x638x128xbf16>, tensor<16x638x128xbf16>, f32, tensor<16x32x638xi1>) outs(%5561 : tensor<16x32x128xbf16>) {
+31265:     %5660 = iree_linalg_ext.attention <indexing_maps = [#map24, #map25, #map26, #map27, #map28, #map29]> ins(%collapsed_3512, %collapsed_3513, %collapsed_3514, %cst, %collapsed_3440 : tensor<16x32x128xbf16>, tensor<16x638x128xbf16>, tensor<16x638x128xbf16>, f32, tensor<16x32x638xi1>) outs(%5561 : tensor<16x32x128xbf16>) {
+31531:     %5709 = iree_linalg_ext.attention <indexing_maps = [#map24, #map25, #map26, #map27, #map28, #map29]> ins(%collapsed_3549, %collapsed_3550, %collapsed_3551, %cst, %collapsed_3440 : tensor<16x32x128xbf16>, tensor<16x638x128xbf16>, tensor<16x638x128xbf16>, f32, tensor<16x32x638xi1>) outs(%5561 : tensor<16x32x128xbf16>) {

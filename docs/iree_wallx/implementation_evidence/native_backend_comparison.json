@@ -1,0 +1,141 @@
+{
+  "protocol": {
+    "warmup_per_process": 3,
+    "repetitions_per_process": 10,
+    "rounds": 2,
+    "order": [
+      "official,torch-compile,staged,expanded",
+      "expanded,staged,torch-compile,official"
+    ]
+  },
+  "backends": {
+    "official": {
+      "samples": 20,
+      "median_ms": 578.0506275186781,
+      "mean_ms": 601.4680302061606,
+      "p95_ms": 766.0261307901237,
+      "min_ms": 545.5245960038155,
+      "max_ms": 779.8622490372509,
+      "rounds": {
+        "1": {
+          "median_ms": 582.2618100210093,
+          "mean_ms": 622.5606480089482,
+          "json_sha256": "93cd97f73b46df73c2831d17e2abb9c7a06fb65f70e81d28f79b028ee9af4ef1"
+        },
+        "2": {
+          "median_ms": 578.0506275186781,
+          "mean_ms": 580.375412403373,
+          "json_sha256": "d36b408c785ce244394a91af2693a71102dd8719912b31372162b391f5435b69"
+        }
+      }
+    },
+    "torch-compile": {
+      "samples": 20,
+      "median_ms": 137.289960461203,
+      "mean_ms": 137.50210405269172,
+      "p95_ms": 140.16551135864574,
+      "min_ms": 134.89739003125578,
+      "max_ms": 141.36489300290123,
+      "rounds": {
+        "1": {
+          "median_ms": 136.65447098901495,
+          "mean_ms": 137.19233230804093,
+          "json_sha256": "37468a16e923169d4e91502ca9fe82a59a61be0465b5e4340ebd444f0a991d4d"
+        },
+        "2": {
+          "median_ms": 137.54875099402852,
+          "mean_ms": 137.8118757973425,
+          "json_sha256": "306d91efa8d1dbb79dde1f39f924cb38a10baacab5a8835091048785add2020b"
+        }
+      }
+    },
+    "staged": {
+      "samples": 20,
+      "median_ms": 395.4386569967028,
+      "mean_ms": 395.13579950435087,
+      "p95_ms": 409.28007483598776,
+      "min_ms": 387.12036702781916,
+      "max_ms": 411.0318520106375,
+      "rounds": {
+        "1": {
+          "median_ms": 397.95281999977306,
+          "mean_ms": 398.1874758086633,
+          "json_sha256": "539064162616b054e3e868dff2f3041470a1c5756d3eb7e20fac475229e01c19"
+        },
+        "2": {
+          "median_ms": 390.0331954937428,
+          "mean_ms": 392.08412320003845,
+          "json_sha256": "a8ceac4bd9c8f6060bd9b1fd116a8b3f814753bf2a31a477eff8e8f07097b6e6"
+        }
+      }
+    },
+    "expanded": {
+      "samples": 20,
+      "median_ms": 389.72021447261795,
+      "mean_ms": 392.1835317480145,
+      "p95_ms": 401.21179127309006,
+      "min_ms": 385.72539400774986,
+      "max_ms": 412.83134097466245,
+      "rounds": {
+        "1": {
+          "median_ms": 394.2147910129279,
+          "mean_ms": 395.78454089933075,
+          "json_sha256": "7a60492121f41d7b331a5c35a05be040630f617c93fad55eb205997e8dadb7bf"
+        },
+        "2": {
+          "median_ms": 388.5013419785537,
+          "mean_ms": 388.58252259669825,
+          "json_sha256": "dee76f97fd1ecdd9a8ebab999bd80f5ee41b34f3f2ecd64abddc7255ab13807c"
+        }
+      }
+    }
+  },
+  "numerical_vs_same_round_official": {
+    "torch-compile": {
+      "1": {
+        "maxabs": 0.014414787292480469,
+        "relmax": 0.010730430483818054,
+        "relmax_percent": 1.0730430483818054,
+        "array_equal": false
+      },
+      "2": {
+        "maxabs": 0.014414787292480469,
+        "relmax": 0.010730430483818054,
+        "relmax_percent": 1.0730430483818054,
+        "array_equal": false
+      }
+    },
+    "staged": {
+      "1": {
+        "maxabs": 0.013390183448791504,
+        "relmax": 0.009967710822820663,
+        "relmax_percent": 0.9967710822820663,
+        "array_equal": false
+      },
+      "2": {
+        "maxabs": 0.013390183448791504,
+        "relmax": 0.009967710822820663,
+        "relmax_percent": 0.9967710822820663,
+        "array_equal": false
+      }
+    },
+    "expanded": {
+      "1": {
+        "maxabs": 0.008919477462768555,
+        "relmax": 0.006639698054641485,
+        "relmax_percent": 0.6639698054641485,
+        "array_equal": false
+      },
+      "2": {
+        "maxabs": 0.008919477462768555,
+        "relmax": 0.006639698054641485,
+        "relmax_percent": 0.6639698054641485,
+        "array_equal": false
+      }
+    }
+  },
+  "expanded_vs_torch_compile": {
+    "expanded_minus_compile_median_ms": 252.43025401141495,
+    "expanded_over_compile_median_ratio": 2.8386650645350695
+  }
+}

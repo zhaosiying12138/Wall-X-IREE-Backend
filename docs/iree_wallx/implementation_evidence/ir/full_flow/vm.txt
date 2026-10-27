@@ -1,0 +1,20 @@
+# Source: /tmp/wallx_native_full_flow_phases/module.12.vm.mlir
+# Bytes: 10158661
+
+# Pattern: 0; hits=2
+23698:     vm.export @main$async attributes {iree.abi.model = "coarse-fences", iree.abi.stub}
+23738:     vm.export @main attributes {iree.abi.stub}
+
+# Pattern: 1; hits=1
+23726:     vm.func private @main(%arg0: !vm.ref<!hal.buffer_view>, %arg1: !vm.ref<!hal.buffer_view>, %arg2: !vm.ref<!hal.buffer_view>, %arg3: !vm.ref<!hal.buffer_view>, %arg4: !vm.ref<!hal.buffer_view>, %arg5: !vm.ref<!hal.buffer_view>, %arg6: !vm.ref<!hal.buffer_view>, %arg7: !vm.ref<!hal.buffer_view>, %arg8: !vm.ref<!hal.buffer_view>, %arg9: !vm.ref<!hal.buffer_v
+
+# Pattern: 2; hits=3
+23724:     vm.import private @hal.fence.await(%timeout_millis : i32, %flags : i64, %fences : !vm.ref<!hal.fence> ...) -> i32 attributes {vm.yield}
+23734:       vm.call.variadic.yieldable @hal.fence.await(%c-1, %zero, %ref_1) <segment_sizes = dense<[-1, -1, 1]> : vector<3xi16>, segment_types = [i32, i64, !vm.ref<!hal.fence>]> : (i32, i64, !vm.ref<!hal.fence>) -> ^bb1 (i32)
+25562:       vm.call.variadic.yieldable @hal.fence.await(%c-1_2, %zero_3, %ref_875) <segment_sizes = dense<[-1, -1, 1]> : vector<3xi16>, segment_types = [i32, i64, !vm.ref<!hal.fence>]> : (i32, i64, !vm.ref<!hal.fence>) -> ^bb16 (i32)
+
+# Pattern: 3; hits=4
+23693:       vm.call.variadic @hal.device.queue.execute.indirect(%__device_0, %c-1, %ref_15, %ref_16, %__main$async_memoize_result_0_device_0, %zero, [(%ref_2, %zero, %c9633792), (%ref, %zero, %c5104), (%ref_5, %zero, %c3328), (%ref_10, %zero, %c3328), (%ref_7, %zero, %c44), (%ref_3, %zero, %c15312), (%ref_4, %zero, %c407044), (%ref_6, %zero, %c104), (%ref_8, %zero
+23716:     vm.import private @hal.device.queue.execute(%device : !vm.ref<!hal.device>, %queue_affinity : i64, %wait_fence : !vm.ref<!hal.fence>, %signal_fence : !vm.ref<!hal.fence>, %command_buffer : !vm.ref<!hal.command_buffer>, %flags : i64)
+23717:     vm.import private @hal.device.queue.execute.indirect(%device : !vm.ref<!hal.device>, %queue_affinity : i64, %wait_fence : !vm.ref<!hal.fence>, %signal_fence : !vm.ref<!hal.fence>, %command_buffer : !vm.ref<!hal.command_buffer>, %flags : i64, %binding_table : tuple<!vm.ref<!hal.buffer>, i64, i64> ...)
+25558:       vm.call @hal.device.queue.execute(%__device_0, %c-1, %ref_871, %ref_873, %ref_872, %zero_3) : (!vm.ref<!hal.device>, i64, !vm.ref<!hal.fence>, !vm.ref<!hal.fence>, !vm.ref<!hal.command_buffer>, i64) -> ()

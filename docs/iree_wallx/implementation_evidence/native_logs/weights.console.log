@@ -1,0 +1,102 @@
++ set -euo pipefail
++ set -x
++ cd /home/zhaosiying/codebase/wall-x-iree-clean
++ /usr/bin/free -g
+               total        used        free      shared  buff/cache   available
+Mem:              47           5          17           4          29          41
+Swap:             12          11           0
++ .venv-serve/bin/python -c 'from pathlib import Path; gb=int(Path("/proc/meminfo").read_text().split("MemAvailable:")[1].split()[0])//(1024*1024); assert gb >= 16, f"available memory {gb} GB < 16 GB"'
++ nvidia-smi --query-gpu=name,memory.used,compute_cap --format=csv
+name, memory.used [MiB], compute_cap
+NVIDIA GeForce RTX 5090 Laptop GPU, 0 MiB, 12.0
++ export PYTHONPATH=/home/zhaosiying/codebase/wall-x-iree-clean
++ PYTHONPATH=/home/zhaosiying/codebase/wall-x-iree-clean
++ export LD_LIBRARY_PATH=/home/zhaosiying/codebase/wall-x-iree-clean/build/cudalib:
++ LD_LIBRARY_PATH=/home/zhaosiying/codebase/wall-x-iree-clean/build/cudalib:
++ export WALLX_CKPT=/home/zhaosiying/codebase/wallx-jax/weights/wall-oss-0.5
++ WALLX_CKPT=/home/zhaosiying/codebase/wallx-jax/weights/wall-oss-0.5
++ printf '%s  %s\n' 37f8f327d3f9c27f056ed078db43c0e39b8caf3df0dc0163cdb8cf92c167968a /home/zhaosiying/codebase/wallx-jax/weights/wall-oss-0.5/model.safetensors
++ sha256sum -c -
+/home/zhaosiying/codebase/wallx-jax/weights/wall-oss-0.5/model.safetensors: OK
++ sha256sum /home/zhaosiying/codebase/wallx-jax/weights/wall-oss-0.5/model.safetensors
++ .venv-serve/bin/python tools/manifest/build_model_manifest.py --checkpoint /home/zhaosiying/codebase/wallx-jax/weights/wall-oss-0.5 --output artifacts/manifests/model.json --model-hash-from /tmp/wallx_native_checkpoint_sha256.txt
+[1/5] environment freeze ...
+[2/5] checkpoint files ...
+[3/5] resolved config ...
+[4/5] tokenizer / processor ...
+[5/5] safetensors census ...
+wrote artifacts/manifests/model.json (157271 bytes)
++ .venv-serve/bin/python tools/manifest/build_bank.py --checkpoint /home/zhaosiying/codebase/wallx-jax/weights/wall-oss-0.5 --samples 4
+typed TrainConfig loading failed; falling back to raw data config: task.dof_config is required (cannot be empty)
+/home/zhaosiying/codebase/wall-x-iree-clean/.venv-serve/lib/python3.12/site-packages/transformers/modeling_rope_utils.py:936: FutureWarning: `rope_config_validation` is deprecated and has been removed. Its functionality has been moved to RotaryEmbeddingConfigMixin.validate_rope method. PreTrainedConfig inherits this class, so please call self.validate_rope() instead. Also, make sure to use the new rope_parameters syntax. You can call self.standardize_rope_params() in the meantime.
+  warnings.warn(
+Unrecognized keys in `rope_parameters` for 'rope_type'='default': {'mrope_section'}
+The new embeddings will be initialized from a multivariate normal distribution that has old embeddings' mean and covariance. As described in this article: https://nlp.stanford.edu/~johnhew/vocab-expansion.html. To disable this, use `mean_resizing=False`
+sample 0: saved sample_000.pt (13.1 MB)
+sample 1: saved sample_001.pt (13.1 MB)
+sample 2: saved sample_002.pt (13.1 MB)
+sample 3: saved sample_003.pt (13.2 MB)
+{
+  "utc": "2026-10-27T12:30:36.965693+00:00",
+  "noise_seed": 20261023,
+  "samples": 4,
+  "time_grid_note": "time_shift resolved from noise_scheduler config with default 1.0; beta_alpha=1.5, beta_beta=1.0 are not part of the inference grid",
+  "time_grid": {
+    "N": 10,
+    "len": 11,
+    "shift": 1.0,
+    "s": 0.999,
+    "values": [
+      0.0,
+      0.0999,
+      0.1998,
+      0.2997,
+      0.3996,
+      0.4995,
+      0.5994,
+      0.6993,
+      0.7992,
+      0.8991,
+      0.999
+    ],
+    "matches_closed_form": true
+  },
+  "routing": {
+    "hist": {
+      "0": 606,
+      "1": 32
+    },
+    "start_indices": [
+      0,
+      606
+    ],
+    "end_indices": [
+      606,
+      638
+    ],
+    "prefix_length": 606,
+    "seq_len": 638
+  },
+  "mrope": {
+    "shape": [
+      3,
+      1,
+      638
+    ],
+    "sections": [
+      16,
+      24,
+      24
+    ],
+    "action_t_all_zero": false,
+    "prefix_t_first512_zero": false
+  }
+}
+BANK DONE
++ ls -lh artifacts/bank/
+total 51M
+-rw-r--r-- 1 zhaosiying zhaosiying 2.3K Oct 27 20:31 index.json
+-rw-r--r-- 1 zhaosiying zhaosiying  13M Oct 27 20:30 sample_000.pt
+-rw-r--r-- 1 zhaosiying zhaosiying  13M Oct 27 20:31 sample_001.pt
+-rw-r--r-- 1 zhaosiying zhaosiying  13M Oct 27 20:31 sample_002.pt
+-rw-r--r-- 1 zhaosiying zhaosiying  13M Oct 27 20:31 sample_003.pt

@@ -1,0 +1,13 @@
+# Source: /home/zhaosiying/codebase/wall-x-iree-clean/artifacts/ir/full_flow.mlir
+# Bytes: 15608302
+
+# Pattern: 0; hits=1
+843:   func.func @main(%arg0: !torch.vtensor<[1,638],si64>, %arg1: !torch.vtensor<[2048,1176],f32>, %arg2: !torch.vtensor<[3,1,638],si64>, %arg3: !torch.vtensor<[1,638,638],i1>, %arg4: !torch.vtensor<[1,32,26],f32>, %arg5: !torch.vtensor<[1,1,26],f32>, %arg6: !torch.vtensor<[11],f32>, %arg7: !torch.vtensor<[3,1,32],si64>, %arg8: !torch.vtensor<[1,32,638],i1>, %ar
+
+# Pattern: 1; hits=3615
+942:     %35 = torch.aten.slice.Tensor %34, %int0_30, %int0_31, %int1_32, %int1_33 : !torch.vtensor<[3,2048,16,80],bf16>, !torch.int, !torch.int, !torch.int, !torch.int -> !torch.vtensor<[1,2048,16,80],bf16>
+947:     %36 = torch.aten.slice.Tensor %34, %int0_34, %int1_35, %int2_36, %int1_37 : !torch.vtensor<[3,2048,16,80],bf16>, !torch.int, !torch.int, !torch.int, !torch.int -> !torch.vtensor<[1,2048,16,80],bf16>
+952:     %37 = torch.aten.slice.Tensor %34, %int0_38, %int2_39, %int3_40, %int1_41 : !torch.vtensor<[3,2048,16,80],bf16>, !torch.int, !torch.int, !torch.int, !torch.int -> !torch.vtensor<[1,2048,16,80],bf16>
+988:     %48 = torch.aten.slice.Tensor %41, %int2_58, %int0_59, %int40, %int1_60 : !torch.vtensor<[2048,16,80],f32>, !torch.int, !torch.int, !torch.int, !torch.int -> !torch.vtensor<[2048,16,40],f32>
+
+# Pattern: 2; hits=0

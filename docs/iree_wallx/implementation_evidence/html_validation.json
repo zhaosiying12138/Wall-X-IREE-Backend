@@ -1,0 +1,53 @@
+{
+  "article": "wallx_iree_implementation.html",
+  "title": "为具身 Flow/VLA 模型接入 IREE 后端：从模型契约到整图编译",
+  "local_browser": {
+    "url": "http://127.0.0.1:8765/wallx_iree_implementation.html",
+    "desktop_viewport": [
+      1280,
+      720
+    ],
+    "mobile_viewport": [
+      390,
+      844
+    ],
+    "chapters": 11,
+    "subsections": 39,
+    "figures": 16,
+    "paper_figures": 3,
+    "images_loaded": true,
+    "katex_elements": 49,
+    "native_log_blocks": 8,
+    "missing_anchors": [],
+    "horizontal_overflow_desktop": false,
+    "horizontal_overflow_mobile": false,
+    "mobile_scroll_width": 375,
+    "external_resources": [],
+    "methodology_visible": "Upstream IREE sources and passes; model adaptation and serving integration",
+    "host_device_and_deployment_terms": true,
+    "complete_response_and_compiler_logs_embedded": true,
+    "compile_gap_visible": "252.430 ms / 2.839x",
+    "native_log_excerpts": 8,
+    "full_logs_preserved_in_evidence": true
+  },
+  "publication": {
+    "url": "https://zhaosiying12138.github.io/Awesome-HTML/wallx-iree-implementation.html",
+    "index": "https://zhaosiying12138.github.io/Awesome-HTML/",
+    "status": "published",
+    "commit": "6da6578",
+    "local_bytes": 5001216,
+    "served_bytes": 5001216,
+    "sha256": "129b62b5791c52ed2c822098af838a46d76e2ece624ca584c41e729881cc6ac4",
+    "byte_identity": true,
+    "index_http": 200,
+    "article_links_http_200": 12,
+    "public_render_chapters": 11,
+    "public_render_figures": 16,
+    "public_render_paper_figures": 3,
+    "public_render_images_loaded": true,
+    "public_render_katex": 49,
+    "public_native_log_blocks": 8,
+    "public_horizontal_overflow_desktop": false,
+    "public_horizontal_overflow_mobile": false
+  }
+}

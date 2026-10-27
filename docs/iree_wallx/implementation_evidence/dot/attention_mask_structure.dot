@@ -1,0 +1,199 @@
+strict digraph torchview_causal_masks {
+	graph [bgcolor=white dpi=144 fontname=Helvetica fontsize=20 label="WALL-OSS-0.5 | causal_masks | Torchview shape-only surrogate" labelloc=t nodesep=0.32 ordering=in pad=0.25 rankdir=TB ranksep=0.65 splines=ortho]
+	node [align=left fontname=Helvetica fontsize=10 height=0.2 margin=0 ranksep=0.1 shape=plaintext style=filled]
+	edge [fontsize=10]
+	0 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                        <TR><TD>token_positions</TD><TD>(638,)</TD></TR>
+                    </TABLE>> fillcolor=lightyellow]
+	1 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                        <TR><TD>padding_query_rows</TD><TD>(1, 638)</TD></TR>
+                    </TABLE>> fillcolor=lightyellow]
+	2 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                    <TR>
+                        <TD ROWSPAN="2">PrefillQueryPositions<BR/>range_[0,638)</TD>
+                        <TD COLSPAN="2">input:</TD>
+                        <TD COLSPAN="2">(638,) </TD>
+                    </TR>
+                    <TR>
+                        <TD COLSPAN="2">output: </TD>
+                        <TD COLSPAN="2">(638, 1) </TD>
+                    </TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	3 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                    <TR>
+                        <TD ROWSPAN="2">PrefillKeyPositions<BR/>range_[0,638)</TD>
+                        <TD COLSPAN="2">input:</TD>
+                        <TD COLSPAN="2">(638,) </TD>
+                    </TR>
+                    <TR>
+                        <TD COLSPAN="2">output: </TD>
+                        <TD COLSPAN="2">(1, 638) </TD>
+                    </TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	4 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                    <TR>
+                        <TD ROWSPAN="2">PrefillCompare<BR/>key_LE_query_638x638</TD>
+                        <TD COLSPAN="2">input:</TD>
+                        <TD COLSPAN="2">(638, 1), (1, 638) </TD>
+                    </TR>
+                    <TR>
+                        <TD COLSPAN="2">output: </TD>
+                        <TD COLSPAN="2">(638, 638) </TD>
+                    </TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	5 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                    <TR>
+                        <TD ROWSPAN="2">PrefillMaskRules<BR/>VL_to_VL_causal<BR/>Action_to_prefix_all_visible<BR/>Action_to_Action_causal<BR/>prefix_to_future_Action_-inf</TD>
+                        <TD COLSPAN="2">input:</TD>
+                        <TD COLSPAN="2">(638, 638) </TD>
+                    </TR>
+                    <TR>
+                        <TD COLSPAN="2">output: </TD>
+                        <TD COLSPAN="2">(638, 638) </TD>
+                    </TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	6 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                    <TR>
+                        <TD ROWSPAN="2">PadQueryOverride<BR/>diagonal_self_loop_only</TD>
+                        <TD COLSPAN="2">input:</TD>
+                        <TD COLSPAN="2">(638, 638), (1, 638) </TD>
+                    </TR>
+                    <TR>
+                        <TD COLSPAN="2">output: </TD>
+                        <TD COLSPAN="2">(638, 638) </TD>
+                    </TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	7 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                    <TR>
+                        <TD ROWSPAN="2">PrefillMask3D<BR/>unsqueeze_batch_[1,638,638]</TD>
+                        <TD COLSPAN="2">input:</TD>
+                        <TD COLSPAN="2">(638, 638) </TD>
+                    </TR>
+                    <TR>
+                        <TD COLSPAN="2">output: </TD>
+                        <TD COLSPAN="2">(1, 638, 638) </TD>
+                    </TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	8 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                    <TR>
+                        <TD ROWSPAN="2">SuffixAbsoluteQuery<BR/>range_[606,638)</TD>
+                        <TD COLSPAN="2">input:</TD>
+                        <TD COLSPAN="2">(638,) </TD>
+                    </TR>
+                    <TR>
+                        <TD COLSPAN="2">output: </TD>
+                        <TD COLSPAN="2">(32, 1) </TD>
+                    </TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	9 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                    <TR>
+                        <TD ROWSPAN="2">SuffixKeyPositions<BR/>range_[0,638)</TD>
+                        <TD COLSPAN="2">input:</TD>
+                        <TD COLSPAN="2">(638,) </TD>
+                    </TR>
+                    <TR>
+                        <TD COLSPAN="2">output: </TD>
+                        <TD COLSPAN="2">(1, 638) </TD>
+                    </TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	10 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                    <TR>
+                        <TD ROWSPAN="2">SuffixCompare<BR/>key_LE_absolute_query_32x638</TD>
+                        <TD COLSPAN="2">input:</TD>
+                        <TD COLSPAN="2">(32, 1), (1, 638) </TD>
+                    </TR>
+                    <TR>
+                        <TD COLSPAN="2">output: </TD>
+                        <TD COLSPAN="2">(32, 638) </TD>
+                    </TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	11 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                    <TR>
+                        <TD ROWSPAN="2">SuffixMaskRules<BR/>Action_to_prefix_all_visible<BR/>Action_to_Action_causal<BR/>future_Action_-inf</TD>
+                        <TD COLSPAN="2">input:</TD>
+                        <TD COLSPAN="2">(32, 638) </TD>
+                    </TR>
+                    <TR>
+                        <TD COLSPAN="2">output: </TD>
+                        <TD COLSPAN="2">(32, 638) </TD>
+                    </TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	12 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                    <TR>
+                        <TD ROWSPAN="2">SuffixMask<BR/>unsqueeze_batch_[1,32,638]</TD>
+                        <TD COLSPAN="2">input:</TD>
+                        <TD COLSPAN="2">(32, 638) </TD>
+                    </TR>
+                    <TR>
+                        <TD COLSPAN="2">output: </TD>
+                        <TD COLSPAN="2">(1, 32, 638) </TD>
+                    </TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	13 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                    <TR>
+                        <TD ROWSPAN="2">AdditiveAttentionMask<BR/>True_to_0_False_to_-inf</TD>
+                        <TD COLSPAN="2">input:</TD>
+                        <TD COLSPAN="2">(1, 638, 638), (1, 32, 638) </TD>
+                    </TR>
+                    <TR>
+                        <TD COLSPAN="2">output: </TD>
+                        <TD COLSPAN="2">(1, 638, 638), (1, 32, 638) </TD>
+                    </TR>
+                    </TABLE>> fillcolor=darkseagreen1]
+	14 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                        <TR><TD>output-tensor</TD><TD>(1, 638, 638)</TD></TR>
+                    </TABLE>> fillcolor=lightyellow]
+	15 [label=<
+                    <TABLE BORDER="0" CELLBORDER="1"
+                    CELLSPACING="0" CELLPADDING="4">
+                        <TR><TD>output-tensor</TD><TD>(1, 32, 638)</TD></TR>
+                    </TABLE>> fillcolor=lightyellow]
+	0 -> 2
+	0 -> 3
+	0 -> 8
+	0 -> 9
+	1 -> 6
+	2 -> 4
+	3 -> 4
+	4 -> 5
+	5 -> 6
+	6 -> 7
+	7 -> 13
+	8 -> 10
+	9 -> 10
+	10 -> 11
+	11 -> 12
+	12 -> 13
+	13 -> 14
+	13 -> 15
+}
