@@ -1,0 +1,5 @@
+# Optional stock-upstream IREE deployment toolchain (validated source reference).
+# Install explicitly: pip install -r requirements-iree.txt
+iree-base-compiler==3.13.0
+iree-base-runtime==3.13.0
+iree-turbine==3.9.0
