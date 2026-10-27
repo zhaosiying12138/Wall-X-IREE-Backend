@@ -526,6 +526,7 @@ class Qwen2_5_VLVisionSdpaAttention(nn.Module):
         cu_seqlens: torch.Tensor,
         rotary_pos_emb: Optional[torch.Tensor] = None,
         position_embeddings: Optional[Tuple[torch.Tensor, torch.Tensor]] = None,
+        max_seqlen: Optional[int] = None,
     ) -> torch.Tensor:
         seq_length = hidden_states.shape[0]
         q, k, v = (

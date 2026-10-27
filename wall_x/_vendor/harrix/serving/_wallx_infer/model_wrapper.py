@@ -541,7 +541,33 @@ class WallxModelWrapper:
 
         return image_inputs
 
-    def infer_flow_action(self, observation, instruction):
+    def _get_serving_backend(self):
+        backend = getattr(self, "_serving_backend", None)
+        if backend is None:
+            from wall_x.serving.backend import create_backend
+
+            # Registry errors (including unknown names and missing artifacts)
+            # are fatal; there is deliberately no implicit eager fallback.
+            backend = create_backend(self.model)
+            backend.initialize()
+            self._serving_backend = backend
+            self.logger.warning(
+                "serving backend ACTIVE (name=%s; no implicit fallback)",
+                backend.name,
+            )
+        return backend
+
+    def _generate_flow_action(self, model_input, padding_action, noise=None):
+        return self._get_serving_backend().generate_flow_action(
+            action_horizon=self.config.action_horizon,
+            action_dim=self.config.action_dim,
+            num_inference_timesteps=self.config.num_inference_timesteps,
+            padding_action=padding_action,
+            noise=noise,
+            **model_input,
+        )
+
+    def infer_flow_action(self, observation, instruction, noise=None):
         self.logger.info("generating flow action")
         self.logger.info(f"flow action instruction: {instruction}")
 
@@ -581,12 +607,8 @@ class WallxModelWrapper:
                 self.logger.warning("CUDA mem_get_info failed: %s", e)
 
         with ScopeTimer("generate_flow_action"):
-            model_output = self.model.generate_flow_action(
-                action_horizon=self.config.action_horizon,
-                action_dim=self.config.action_dim,
-                num_inference_timesteps=self.config.num_inference_timesteps,
-                padding_action=padding_action,
-                **model_input,
+            model_output = self._generate_flow_action(
+                model_input, padding_action, noise=noise
             )
 
         self.logger.info("flow action generation done")
@@ -598,7 +620,7 @@ class WallxModelWrapper:
         self.logger.info("saved flow action to robot_state_action_data")
         return model_output
 
-    def infer_flow_action_batch(self, observations, instructions):
+    def infer_flow_action_batch(self, observations, instructions, noise=None):
         """
         Batch flow action inference:
         - observations: List[Dict], same format as single inference
@@ -636,12 +658,8 @@ class WallxModelWrapper:
         ).to(batch_inputs["input_ids"].device)
 
         with ScopeTimer("generate_flow_action_batch"):
-            model_output = self.model.generate_flow_action(
-                action_horizon=self.config.action_horizon,
-                action_dim=self.config.action_dim,
-                num_inference_timesteps=self.config.num_inference_timesteps,
-                padding_action=padding_action,
-                **batch_inputs,
+            model_output = self._generate_flow_action(
+                batch_inputs, padding_action, noise=noise
             )
 
         predict_action = model_output["predict_action"]  # [B, H, D]

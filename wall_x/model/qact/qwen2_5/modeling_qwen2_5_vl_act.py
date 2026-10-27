@@ -1773,6 +1773,7 @@ class Qwen2_5_VLMoEForAction(
         action_dim,
         num_inference_timesteps: int = 10,
         prefix_length: Optional[int] = None,  # prefix length
+        noise: Optional[torch.Tensor] = None,  # explicit flow noise [B, A, D]
         attention_mask: Optional[torch.Tensor] = None,
         position_ids: Optional[torch.LongTensor] = None,
         past_key_values: Optional[List[torch.FloatTensor]] = None,
@@ -1809,6 +1810,7 @@ class Qwen2_5_VLMoEForAction(
             action_dim=action_dim,
             num_inference_timesteps=num_inference_timesteps,
             prefix_length=prefix_length,
+            noise=noise,
             attention_mask=attention_mask,
             position_ids=position_ids,
             past_key_values=past_key_values,
@@ -1886,6 +1888,8 @@ class Qwen2_5_VLMoEForAction(
         dataset_names,
         dof_mask,
         agent_pos_mask,
+        noise=None,
+        skip_action_embedding=False,
     ):
         batch_size = (
             input_ids.shape[0] if input_ids is not None else inputs_embeds.shape[0]
@@ -2052,11 +2056,19 @@ class Qwen2_5_VLMoEForAction(
 
         # Reproduce
         # torch.manual_seed(0)
-        noise = torch.randn(
-            size=(batch_size, action_horizon, action_dim),
-            dtype=torch.float32,
-            device=inputs_embeds.device,
-        )
+        if noise is None:
+            noise = torch.randn(
+                size=(batch_size, action_horizon, action_dim),
+                dtype=torch.float32,
+                device=inputs_embeds.device,
+            )
+        else:
+            noise = noise.to(device=inputs_embeds.device, dtype=torch.float32)
+            if tuple(noise.shape) != (batch_size, action_horizon, action_dim):
+                raise ValueError(
+                    f"explicit noise shape {tuple(noise.shape)} does not match "
+                    f"({batch_size}, {action_horizon}, {action_dim})"
+                )
         noisy_action = noise.clone()
 
         dof_mask = dof_mask.to(inputs_embeds.device).to(torch.float32)
@@ -2069,13 +2081,17 @@ class Qwen2_5_VLMoEForAction(
             )
         times = self.times_cache[num_inference_timesteps]
         time_0 = times[0].unsqueeze(0).repeat(noisy_action.shape[0])
-        action_embed, adarms_cond = self.action_preprocessor.step(
-            timestep=time_0, noisy_action=noisy_action, dof_mask=dof_mask
-        )
-        action_embed = action_embed.reshape(-1, inputs_embeds.shape[-1]).to(
-            inputs_embeds.dtype
-        )
-        inputs_embeds[flow_action_mask] = action_embed
+        if not skip_action_embedding:
+            action_embed, adarms_cond = self.action_preprocessor.step(
+                timestep=time_0, noisy_action=noisy_action, dof_mask=dof_mask
+            )
+            action_embed = action_embed.reshape(-1, inputs_embeds.shape[-1]).to(
+                inputs_embeds.dtype
+            )
+            inputs_embeds[flow_action_mask] = action_embed
+        else:
+            # Expanded full-flow computes the real t=0 embedding in-graph.
+            adarms_cond = None
 
         # Automatically generate padding actions from dof_mask
         if not dof_mask.all():
